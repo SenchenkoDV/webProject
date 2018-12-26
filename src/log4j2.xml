@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appenders>
+        <RollingFile name="RollingFile">
+            <FileName>log/mylog.log</FileName>
+            <FilePattern>log/size-based-logs/%d{yyyy-MM-dd-hh}-%i.log.zip</FilePattern>
+            <PatternLayout>
+                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="2 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="2"/>
+        </RollingFile>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ABSOLUTE} [%-5level] (%F:%L) - %m%n"/>
+        </Console>
+    </appenders>
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>
