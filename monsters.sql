@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   CONSTRAINT `fk_Ratings_User1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Дамп данных таблицы monsters.comments: ~7 rows (приблизительно)
+-- Дамп данных таблицы monsters.comments: ~8 rows (приблизительно)
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 INSERT INTO `comments` (`id_comment`, `date`, `id_monster`, `mark`, `comment`, `id_user`) VALUES
 	(1, '2018-10-10 00:00:00', 1, 5, 'nice', 0),
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `monsters` (
   `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `id_race` int(11) NOT NULL,
   `description` varchar(900) CHARACTER SET utf8 DEFAULT NULL,
-  `average_rating` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
+  `average_rating` double DEFAULT NULL,
   PRIMARY KEY (`id_monster`,`id_race`),
   KEY `fk_Monsters_Races1_idx` (`id_race`),
   CONSTRAINT `fk_Monsters_Races1` FOREIGN KEY (`id_race`) REFERENCES `races` (`id_race`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `races` (
   PRIMARY KEY (`id_race`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Дамп данных таблицы monsters.races: ~3 rows (приблизительно)
+-- Дамп данных таблицы monsters.races: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `races` DISABLE KEYS */;
 INSERT INTO `races` (`id_race`, `race`) VALUES
 	(1, 'Kree'),

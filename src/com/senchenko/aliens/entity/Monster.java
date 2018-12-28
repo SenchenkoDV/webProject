@@ -5,15 +5,14 @@ public class Monster extends Entity {
     private String name;
     private Race race;
     private String description;
-    //todo  -> double
-    private String average_rating;
+    private Double averageRating;
 
-    public Monster(int monsterId, String name, Race race, String description, String average_rating) {
+    public Monster(int monsterId, String name, Race race, String description, Double averageRating) {
         this.monsterId = monsterId;
         this.name = name;
         this.race = race;
         this.description = description;
-        this.average_rating = average_rating;
+        this.averageRating = averageRating;
     }
 
     public int getMonsterId() {
@@ -48,12 +47,12 @@ public class Monster extends Entity {
         this.description = description;
     }
 
-    public String getAverage_rating() {
-        return average_rating;
+    public Double getAverageRating() {
+        return averageRating;
     }
 
-    public void setAverage_rating(String average_rating) {
-        this.average_rating = average_rating;
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class Monster extends Entity {
         if (name != null ? !name.equals(monster.name) : monster.name != null) return false;
         if (race != null ? !race.equals(monster.race) : monster.race != null) return false;
         if (description != null ? !description.equals(monster.description) : monster.description != null) return false;
-        return average_rating != null ? average_rating.equals(monster.average_rating) : monster.average_rating == null;
+        return averageRating != null ? averageRating.equals(monster.averageRating) : monster.averageRating == null;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class Monster extends Entity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (race != null ? race.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (average_rating != null ? average_rating.hashCode() : 0);
+        result = 31 * result + (averageRating != null ? averageRating.hashCode() : 0);
         return result;
     }
 
@@ -87,7 +86,7 @@ public class Monster extends Entity {
                 ", name='" + name + '\'' +
                 ", race=" + race +
                 ", description='" + description + '\'' +
-                ", average_rating='" + average_rating + '\'' +
+                ", averageRating=" + averageRating +
                 '}';
     }
 }

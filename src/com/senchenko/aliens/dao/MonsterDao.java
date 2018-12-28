@@ -31,7 +31,7 @@ public class MonsterDao extends AliensDao {
                                 resultSet.getInt("id_race"),
                                 resultSet.getString("race")),
                         resultSet.getString("description"),
-                        resultSet.getString("average_rating")
+                        resultSet.getDouble("average_rating")
                 );
                 monsters.add(monster);
             }
@@ -58,7 +58,7 @@ public class MonsterDao extends AliensDao {
                                 resultSet.getInt("id_race"),
                                 resultSet.getString("race")),
                         resultSet.getString("description"),
-                        resultSet.getString("average_rating")
+                        resultSet.getDouble("average_rating")
                 );
             }
         } catch (SQLException e) {
@@ -102,7 +102,7 @@ public class MonsterDao extends AliensDao {
             statement.setString(1, monster.getName());
             statement.setInt(2, monster.getRace().getRaceId());
             statement.setString(3, monster.getDescription());
-            statement.setString(4, monster.getAverage_rating());
+            statement.setDouble(4, monster.getAverageRating());
             statement.executeUpdate();
             flag = true;
         } catch (SQLException e) {
@@ -123,7 +123,7 @@ public class MonsterDao extends AliensDao {
             statement.setString(1, monster.getName());
             statement.setInt(2, monster.getRace().getRaceId());
             statement.setString(3, monster.getDescription());
-            statement.setString(4, monster.getAverage_rating());
+            statement.setDouble(4, monster.getAverageRating());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "SQL exception ", e);
