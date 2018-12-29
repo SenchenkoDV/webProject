@@ -221,7 +221,9 @@ html {
 
 .add-comment{
     background: white;
+    max-height: 200px;
     display: flex;
+    justify-content: center;
     align-content: stretch;
     flex-grow: inherit;
     margin: 10px;
@@ -231,10 +233,107 @@ html {
 
 .latest-comments{
     background: white;
+    max-height: 150px;
+    padding: 10px;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     flex-grow: inherit;
-    align-content: stretch;
     margin: 10px;
-    flex: 3;
+    flex: 1;
     border-radius: 10px;
+}
+
+
+input.star{
+    display: none;
+}
+
+label.star {
+    float: right;
+    align-self: left;
+    padding: 7px;
+    font-size: 25px;
+    color: #444;
+    transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+    content:'\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+
+
+
+label.star:before{
+    content:'\f006';
+    font-family: FontAwesome;
+}
+
+
+
+textarea.review{
+    flex: 1 0 auto;
+    display: flex;
+    background: white;
+    border: none;
+    padding: 10px;
+    resize: none;
+    outline:none;
+    border:2px #060d1b solid;
+    width: 650px;
+    height: 100px;
+}
+
+.send-button{
+    float: right;
+    background: #afdf90;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    height: 40px;
+    margin: 7px;
+}
+
+.user{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 3px;
+}
+
+.mark-text{
+    font-size: 16px;
+    color: red;
+    margin: 4px;
+}
+
+.comment{
+    flex: 1 0 auto;
+    display: flex;
+    background: white;
+    border: none;
+    padding: 10px;
+    resize: none;
+    outline:none;
+    border:2px #060d1b solid;
+    width: 650px;
+    height: max-content;
+
+}
+
+.output-star{
+    content:'\f005';
+    border-color: #FD4;
+    transition: all .25s;
+}
+
+.fa.fa-star{
+    float: right;
+    align-self: left;
+    padding: 7px;
+    font-size: 25px;
+    color: #FD4;
+    transition: all .2s;
 }

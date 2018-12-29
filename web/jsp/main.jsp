@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 <html>
 <head>
@@ -70,11 +71,45 @@ Jude Law will portray Mar-Vell in the Marvel Studios film Captain Marvel, to be 
         </div>
         <div class="comments">
             <div class="comments-wrapper">
-                <form class="add-comment">
-                    ${pageContext.request.contextPath}
-                </form>
+                <div class="add-comment">
+                    <form action="" id="review" class="review">
+                        <input class="star star-5" id="star-10" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-10"></label>
+                        <input class="star star-5" id="star-9" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-9"></label>
+                        <input class="star star-5" id="star-8" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-8"></label>
+                        <input class="star star-5" id="star-7" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-7"></label>
+                        <input class="star star-5" id="star-6" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-6"></label>
+                        <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
+                        <label class="star star-5" for="star-5"></label>
+                        <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
+                        <label class="star star-4" for="star-4"></label>
+                        <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
+                        <label class="star star-3" for="star-3"></label>
+                        <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
+                        <label class="star star-2" for="star-2"></label>
+                        <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
+                        <label class="star star-1" for="star-1"></label>
+                        <div class="rev-box">
+                            <textarea class="review" col="30" name="review"></textarea>
+                        </div>
+                        <input type="submit" class="send-button" value="Send"/>
+                    </form>
+                </div>
                 <div class="latest-comments">
+                    <c:forEach var="comment" items="${comments}">
+                        <p class="user">${comment.user.login}</p>
+                        <p class="mark-text">
+                            <c:forEach begin="1" end="3">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </c:forEach>
 
+                        </p>
+                        <output class="comment" name="" value="comment.comment"/>
+                    </c:forEach>
                 </div>
             </div>
         </div>
