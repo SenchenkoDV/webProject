@@ -105,7 +105,6 @@ html {
 }
 
 .image_description{
-    display: flex;
     flex-grow: inherit;
     align-content: center;
     flex-direction: column;

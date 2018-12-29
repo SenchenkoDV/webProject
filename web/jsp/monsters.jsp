@@ -4,7 +4,7 @@
 <html>
 <head>
     <style>
-        <%@include file="../css/login-style.css"%>
+        <%@include file="../css/monster-style.css"%>
     </style>
     <meta charset="UTF-8">
     <title>Monsters</title>
@@ -23,8 +23,8 @@
         <div class="user">${user[0]}</div>
     </header>
     <article class="content">
+        <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
-            <div class="for-wrapper">
                 <div class="picture">
                     <div class="picture-wrapper">
                         <div class="image-wrapper">
@@ -33,15 +33,15 @@
                         <div class="image_description">
                             <p class="monster-name">${monster.name}</p>
                             <p class="monster-race">Race: ${monster.race.race}</p>
-                            <p class="average-rating">Average rating: ${monster.average_rating}</p>
+                            <p class="average-rating">Average rating: ${monster.averageRating}</p>
                         </div>
                         <div class="short-description-wrapper">
                             <p class="monster-name"></p>
                         </div>
                     </div>
                 </div>
-            </div>
         </c:forEach>
+        </div>
     </article>
     <footer class="footer">
         <p class="footer-description">HTP & EPAM Systems - 2019, Denis Senchenko, Monsters</p>
