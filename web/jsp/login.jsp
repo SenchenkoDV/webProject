@@ -29,6 +29,7 @@
             <input type="text" class="input-field" name="login" value=""/>
             <p class="password-text">Password:</p>
             <input type="password" class="input-field" name="password" value=""/>
+            <a href="../web?command=registration" class="registration">Registration</a>
             <br/>
             ${errorLoginPassMessage[0]}
             <br/>

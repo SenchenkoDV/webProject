@@ -11,6 +11,8 @@ import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 import com.sun.istack.internal.NotNull;
 
+import java.util.List;
+
 public class UserService {
     private static final Role DEFAULT_USER_ROLE = new Role(2, "user");
     private static final int DEFAULT_USER_ID = 0;
@@ -42,6 +44,7 @@ public class UserService {
     }
 
     public CommandResult registration(RequestContent content){
+        System.out.println("registration start");
         CommandResult commandResult = null;
         String[] enterLogin = content.getRequestParameters().get("login");
         String[] enterPass = content.getRequestParameters().get("password");
@@ -52,6 +55,7 @@ public class UserService {
         transactionExecutor.beginTransaction(userDao);
         User createdUser = (User) userDao.findUserByLogin(enterLogin[0]);
         transactionExecutor.commit();
+
         if (createdUser == null) {
             createdUser = new User(DEFAULT_USER_ID, DEFAULT_USER_ROLE, DEFAULT_USER_RATING,
                     enterLogin[0], enterPass[0], enterEmail[0]);
@@ -64,6 +68,34 @@ public class UserService {
                     MessageManager.EN.getMessage("createUserError")});
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("index"));
         }
+        return commandResult;
+    }
+
+    public CommandResult changeRating(RequestContent content){
+        CommandResult commandResult = null;
+        String login = null;
+        login = content.getRequestParameters().get("login")[0];
+        TransactionExecutor transactionExecutor = new TransactionExecutor();
+        UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
+        transactionExecutor.beginTransaction(userDao);
+        User currentUser = (User) userDao.findUserByLogin(login);
+        transactionExecutor.commit();
+        currentUser.setRole(new Role(1, "admin"));
+        userDao.update(currentUser);
+        transactionExecutor.commit();
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
+        return commandResult;
+    }
+
+    public CommandResult displayAllUsers(RequestContent content){
+        CommandResult commandResult = null;
+        List<User> userList = null;
+        UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
+        TransactionExecutor transactionExecutor = new TransactionExecutor();
+        transactionExecutor.beginTransaction(userDao);
+        userList = userDao.findAll();
+        transactionExecutor.commit();
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
         return commandResult;
     }
 }
