@@ -61,6 +61,10 @@ public class SqlQueries {
             "SELECT * FROM monsters " +
                     "JOIN races ON monsters.id_race = races.id_race " +
                     "WHERE id_monster = ?";
+    public static final String SQL_SELECT_MONSTER_BY_NAME =
+            "SELECT * FROM monsters " +
+                    "JOIN races ON monsters.id_race = races.id_race " +
+                    "WHERE name = ?";
     public static final String SQL_INSERT_MONSTER =
             "INSERT INTO monsters(name, id_race, description, average_rating) VALUES(?,?,?,?)";
     public static final String SQL_UPDATE_MONSTER =

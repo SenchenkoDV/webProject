@@ -57,7 +57,7 @@
             <div class="text-description">
                 <button class="edit-button" id="edit-id" onclick="enable()">Edit</button>
                 <form class="description-form" id="registration-form">
-                    <textarea class="text-area" disabled id="area-id">   Captain Marvel (Mar-Vell) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and designed by artist Gene Colan and first appeared in Marvel Super-Heroes #12 (December 1967).
+                    <textarea class="text-area" disabled id="area-id" name="description">   Captain Marvel (Mar-Vell) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and designed by artist Gene Colan and first appeared in Marvel Super-Heroes #12 (December 1967).
 
 The character debuted during the Silver Age of comic books and has made many appearances since then, including a self-titled series and the second volume of the Marvel Spotlight series. Captain Marvel was ranked 24th in IGN's list of "The Top 50 Avengers"[1] and has appeared in television series and video games.
 

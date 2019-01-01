@@ -49,6 +49,33 @@ public class MonsterDao extends AliensDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SqlQueries.SQL_SELECT_MONSTER_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                monster = new Monster(
+                        resultSet.getInt("id_monster"),
+                        resultSet.getString("name"),
+                        new Race(
+                                resultSet.getInt("id_race"),
+                                resultSet.getString("race")),
+                        resultSet.getString("description"),
+                        resultSet.getDouble("average_rating")
+                );
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "SQL exception " + e);
+        } finally {
+            this.closeStatement(statement);
+        }
+        return monster;
+    }
+
+    public Entity findByName(String name) {
+        Monster monster = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SqlQueries.SQL_SELECT_MONSTER_BY_NAME);
+            statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 monster = new Monster(
