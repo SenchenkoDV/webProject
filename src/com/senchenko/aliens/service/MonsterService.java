@@ -7,7 +7,6 @@ import com.senchenko.aliens.dao.SingletonDaoProvider;
 import com.senchenko.aliens.dao.TransactionExecutor;
 import com.senchenko.aliens.entity.Monster;
 import com.senchenko.aliens.manager.PageManager;
-
 import java.util.List;
 
 public class MonsterService {

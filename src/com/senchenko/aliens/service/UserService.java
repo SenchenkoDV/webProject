@@ -18,6 +18,14 @@ public class UserService {
     private static final int DEFAULT_USER_ID = 0;
     private static final int DEFAULT_USER_RATING = 0;
 
+    public CommandResult loginPage(RequestContent content){
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("login"));
+    }
+
+    public CommandResult registrationPage(RequestContent content){
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("registration"));
+    }
+
     public CommandResult login(RequestContent content){
         CommandResult commandResult = null;
         String[] enterLogin = content.getRequestParameters().get("login");

@@ -4,9 +4,11 @@ import com.senchenko.aliens.content.RequestContent;
 
 public enum  CommandFactory {
     INSTANCE;
+    private final static String DASH = "-";
+    private final static String UNDERSCORE = "_";
 
     public Command getCommand(RequestContent content){
-        String name = content.getRequestParameters().get("command")[0];
+        String name = content.getRequestParameters().get("command")[0].replace(DASH, UNDERSCORE).trim();
         System.out.println(name);
         CommandType type = CommandType.valueOf(name.toUpperCase());
         return type.getCommand();

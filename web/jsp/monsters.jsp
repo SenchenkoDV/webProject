@@ -13,15 +13,7 @@
 <body>
 
 <div class="main-wrap">
-    <header class="header">
-        <a href="../web?command=monsters" class="header-button">MONSTERS</a>
-        <a href="" class="header-button">USERS</a>
-        <c:choose>
-            <c:when test="${user[0]==null}"><a href="../web?command=login" class="header-button">LOG IN</a></c:when>
-            <c:otherwise><a href="../web?command=logout" class="header-button">LOGOUT</a></c:otherwise>
-        </c:choose>
-        <div class="user">${user[0]}</div>
-    </header>
+    <c:import url="include/header.jsp" charEncoding="utf-8"/>
     <article class="content">
         <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
@@ -43,9 +35,7 @@
         </c:forEach>
         </div>
     </article>
-    <footer class="footer">
-        <p class="footer-description">HTP & EPAM Systems - 2019, Denis Senchenko, Monsters</p>
-    </footer>
+    <c:import url="include/footer.jsp" charEncoding="utf-8"/>
 </div>
 
 </body>

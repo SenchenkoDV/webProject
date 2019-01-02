@@ -13,15 +13,7 @@
 <body>
 
 <div class="main-wrap">
-    <header class="header">
-        <a href="../web?command=monsters" class="header-button">MONSTERS</a>
-        <a href="" class="header-button">USERS</a>
-        <c:choose>
-            <c:when test="${user[0]==null}"><a href="../web?command=login" class="header-button">LOG IN</a></c:when>
-            <c:otherwise><a href="../web?command=logout" class="header-button">LOGOUT</a></c:otherwise>
-        </c:choose>
-        <div class="user">${user[0]}</div>
-    </header>
+    <c:import url="include/header.jsp" charEncoding="utf-8"/>
     <article class="content">
         <form name="loginForm" class="login-form" method="POST" action="../web">
             <input type="hidden" name="command" value="login"/>
@@ -29,7 +21,7 @@
             <input type="text" class="input-field" name="login" value=""/>
             <p class="password-text">Password:</p>
             <input type="password" class="input-field" name="password" value=""/>
-            <a href="../web?command=registration" class="registration">Registration</a>
+            <a href="../web?command=registration-page" class="registration">Registration</a>
             <br/>
             ${errorLoginPassMessage[0]}
             <br/>
@@ -40,9 +32,7 @@
             <input type="submit" class="submit-button" value="Log in"/>
         </form>
     </article>
-    <footer class="footer">
-        <p class="footer-description">HTP & EPAM Systems - 2019, Denis Senchenko, Monsters</p>
-    </footer>
+    <c:import url="include/footer.jsp" charEncoding="utf-8"/>
 </div>
 
 </body>
