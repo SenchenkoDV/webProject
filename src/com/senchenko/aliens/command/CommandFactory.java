@@ -8,7 +8,7 @@ public enum  CommandFactory {
     private final static String UNDERSCORE = "_";
 
     public Command getCommand(RequestContent content){
-        String name = content.getRequestParameters().get("command")[0].replace(DASH, UNDERSCORE).trim();
+        String name = content.getRequestParameters().get("command")[0].replaceAll(DASH, UNDERSCORE).trim();
         System.out.println(name);
         CommandType type = CommandType.valueOf(name.toUpperCase());
         return type.getCommand();

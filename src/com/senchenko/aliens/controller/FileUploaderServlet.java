@@ -14,7 +14,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/upload"})
+@WebServlet(urlPatterns = {"/upload/*"})
 @MultipartConfig(location = "", fileSizeThreshold = 1024 * 1024
         , maxFileSize = 1024 * 1024 * 5
         , maxRequestSize = 1024 * 1024 * 5 * 5)
@@ -34,7 +34,11 @@ public class FileUploaderServlet extends HttpServlet {
             for(Part part : req.getParts()) {
                 if (part.getSubmittedFileName() != null) {
                     part.write(uploadFilePath + File.separator + part.getSubmittedFileName());
+                    req.setAttribute("filePath",
+                            File.separator + UPLOAD_DIR + File.separator + part.getSubmittedFileName());
+                    System.out.println(File.separator + UPLOAD_DIR + File.separator + part.getSubmittedFileName());
                     req.setAttribute("result", part.getSubmittedFileName() + " upload successfully");
+                    req.getRequestDispatcher("/web").forward(req, resp);
                 }
             }
         } catch (IOException e) {

@@ -43,7 +43,7 @@ public class UserService {
         }
         else {
             content.getRequestParameters().put("user", new String[]{currentUser.getLogin()});
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("main"));
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("monsters"));
         }
         return commandResult;
     }

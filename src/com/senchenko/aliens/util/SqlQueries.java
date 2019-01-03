@@ -66,10 +66,10 @@ public class SqlQueries {
                     "JOIN races ON monsters.id_race = races.id_race " +
                     "WHERE name = ?";
     public static final String SQL_INSERT_MONSTER =
-            "INSERT INTO monsters(name, id_race, description, average_rating) VALUES(?,?,?,?)";
+            "INSERT INTO monsters(name, id_race, description, average_rating, picture_address) VALUES(?,?,?,?,?)";
     public static final String SQL_UPDATE_MONSTER =
             "UPDATE monsters " +
-                    "SET name = ?, id_race = ?, description = ?, average_rating = ? " +
+                    "SET name = ?, id_race = ?, description = ?, average_rating = ?, picture_address = ? " +
                     "WHERE id_monster = ?";
     public static final String SQL_DELETE_MONSTER_BY_ID =
             "DELETE FROM monsters where id_monster = ?";
@@ -78,6 +78,9 @@ public class SqlQueries {
     public static final String SQL_SELECT_RACE_BY_ID =
             "SELECT * FROM races " +
                     "WHERE id_race = ?";
+    public static final String SQL_SELECT_RACE_BY_RACE =
+            "SELECT * FROM races " +
+                    "WHERE race = ?";
     public static final String SQL_INSERT_RACE =
             "INSERT INTO races(race) VALUES(?)";
     public static final String SQL_UPDATE_RACE =

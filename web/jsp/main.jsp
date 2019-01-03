@@ -36,9 +36,9 @@
                         <img class="current-picture" src="/images/heroes/250px-Captain_Marvel_29.jpg">
                     </div>
                     <div class="image_description">
-                        <p class="monster-name">Captain Marvel</p>
-                        <p class="monster-race">Race: Kree</p>
-                        <p class="average-rating">Average rating: 8.7</p>
+                        <p class="monster-name">${monster.name}</p>
+                        <p class="monster-race">Race: ${monster.race.race}</p>
+                        <p class="average-rating">Average rating: ${monster.averageRating}</p>
                     </div>
                     <div class="short-description-wrapper">
                         <p class="monster-name"></p>
@@ -48,14 +48,11 @@
             <div class="text-description">
                 <button class="edit-button" id="edit-id" onclick="enable()">Edit</button>
                 <form class="description-form" id="registration-form">
-                    <textarea class="text-area" disabled id="area-id" name="description">   Captain Marvel (Mar-Vell) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and designed by artist Gene Colan and first appeared in Marvel Super-Heroes #12 (December 1967).
-
-The character debuted during the Silver Age of comic books and has made many appearances since then, including a self-titled series and the second volume of the Marvel Spotlight series. Captain Marvel was ranked 24th in IGN's list of "The Top 50 Avengers"[1] and has appeared in television series and video games.
-
-Jude Law will portray Mar-Vell in the Marvel Studios film Captain Marvel, to be released in 2019.</textarea>
+                    <textarea class="text-area" disabled id="area-id" name="description">
+                        ${monster.description}
+                    </textarea>
                     <button hidden class="save-button" id="save-id" onclick="disable()">Save</button>
                 </form>
-
             </div>
 
 

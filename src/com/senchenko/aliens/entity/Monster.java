@@ -6,13 +6,15 @@ public class Monster extends Entity {
     private Race race;
     private String description;
     private Double averageRating;
+    private String pictureAddress;
 
-    public Monster(int monsterId, String name, Race race, String description, Double averageRating) {
+    public Monster(int monsterId, String name, Race race, String description, Double averageRating, String pictureAddress) {
         this.monsterId = monsterId;
         this.name = name;
         this.race = race;
         this.description = description;
         this.averageRating = averageRating;
+        this.pictureAddress = pictureAddress;
     }
 
     public int getMonsterId() {
@@ -53,6 +55,14 @@ public class Monster extends Entity {
 
     public void setAverageRating(Double averageRating) {
         this.averageRating = averageRating;
+    }
+
+    public String getPictureAddress() {
+        return pictureAddress;
+    }
+
+    public void setPictureAddress(String pictureAddress) {
+        this.pictureAddress = pictureAddress;
     }
 
     @Override

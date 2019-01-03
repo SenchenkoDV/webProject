@@ -30,7 +30,8 @@ public class CommentDao extends AliensDao {
                                         resultSet.getInt("id_race"),
                                         resultSet.getString("race")),
                                 resultSet.getString("description"),
-                                resultSet.getDouble("average_rating")
+                                resultSet.getDouble("average_rating"),
+                                resultSet.getString("picture_address")
                         ),
                         resultSet.getInt("mark"),
                         resultSet.getString("comment"),
@@ -74,7 +75,8 @@ public class CommentDao extends AliensDao {
                                         resultSet.getInt("id_race"),
                                         resultSet.getString("role")),
                                 resultSet.getString("description"),
-                                resultSet.getDouble("average_rating")
+                                resultSet.getDouble("average_rating"),
+                                resultSet.getString("picture_address")
                         ),
                         resultSet.getInt("mark"),
                         resultSet.getString("comment"),

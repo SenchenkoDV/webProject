@@ -13,7 +13,9 @@ public enum CommandType {
     DISPLAY_USERS(new UserService()::displayAllUsers),
     MONSTERS(new MonsterService()::getMonstersList),
     MONSTER(new MonsterService()::getMonster),
-    CHANGE_MONSTER_DESCRIPTION(new MonsterService()::changeMonsterDescription);
+    CHANGE_MONSTER_DESCRIPTION(new MonsterService()::changeMonsterDescription),
+    ADD_MONSTER_PAGE(new MonsterService()::addMonsterPage),
+    ADD_MONSTER(new MonsterService()::addMonster);
 
     private Command command;
 

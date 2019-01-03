@@ -1,13 +1,11 @@
 package com.senchenko.aliens.dao;
 
-import com.senchenko.aliens.configuration.ConnectionPool;
 import com.senchenko.aliens.entity.Entity;
 import com.senchenko.aliens.entity.Race;
 import com.senchenko.aliens.util.SqlQueries;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,6 +43,28 @@ public class RaceDao extends AliensDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SqlQueries.SQL_SELECT_RACE_BY_ID);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                race = new  Race(
+                        resultSet.getInt("id_race"),
+                        resultSet.getString("race")
+                );
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "SQL exception ", e);
+        } finally {
+            this.closeStatement(statement);
+        }
+        return race;
+    }
+
+    public Entity findByRace(String raceName) {
+        Race race = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SqlQueries.SQL_SELECT_RACE_BY_RACE);
+            statement.setString(1, raceName);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 race = new  Race(

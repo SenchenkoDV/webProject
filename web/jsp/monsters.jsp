@@ -17,10 +17,10 @@
     <article class="content">
         <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
-                <div class="picture">
+                <a href="../web?command=monster&name=${monster.name}" class="picture">
                     <div class="picture-wrapper">
                         <div class="image-wrapper">
-                            <img class="current-picture" src="../images/heroes/250px-Captain_Marvel_29.jpg">
+                            <img class="current-picture" src="${monster.pictureAddress}">
                         </div>
                         <div class="image_description">
                             <p class="monster-name">${monster.name}</p>
@@ -31,7 +31,7 @@
                             <p class="monster-name"></p>
                         </div>
                     </div>
-                </div>
+                </a>
         </c:forEach>
         </div>
     </article>
