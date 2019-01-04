@@ -155,6 +155,8 @@ public class MonsterDao extends AliensDao {
             statement.setInt(2, monster.getRace().getRaceId());
             statement.setString(3, monster.getDescription());
             statement.setDouble(4, monster.getAverageRating());
+            statement.setString(5, monster.getPictureAddress());
+            statement.setInt(6, monster.getMonsterId());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "SQL exception ", e);

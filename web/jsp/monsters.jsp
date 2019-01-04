@@ -17,8 +17,8 @@
     <article class="content">
         <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
-                <a href="../web?command=monster&name=${monster.name}" class="picture">
-                    <div class="picture-wrapper">
+                <div class="picture">
+                    <a class="picture-wrapper" href="../web?command=monster&name=${monster.name}">
                         <div class="image-wrapper">
                             <img class="current-picture" src="${monster.pictureAddress}">
                         </div>
@@ -27,11 +27,9 @@
                             <p class="monster-race">Race: ${monster.race.race}</p>
                             <p class="average-rating">Average rating: ${monster.averageRating}</p>
                         </div>
-                        <div class="short-description-wrapper">
-                            <p class="monster-name"></p>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                    <a class="edit-monster" href="../web?command=update-monster-page&name=${monster.name}">Edit</a>
+                </div>
         </c:forEach>
         </div>
     </article>

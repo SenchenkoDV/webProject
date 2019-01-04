@@ -18,11 +18,11 @@ public class UserService {
     private static final int DEFAULT_USER_ID = 0;
     private static final int DEFAULT_USER_RATING = 0;
 
-    public CommandResult loginPage(RequestContent content){
+    public CommandResult showLoginPage(RequestContent content){
         return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("login"));
     }
 
-    public CommandResult registrationPage(RequestContent content){
+    public CommandResult showRegistrationPage(RequestContent content){
         return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("registration"));
     }
 
@@ -80,19 +80,19 @@ public class UserService {
     }
 
     public CommandResult changeRating(RequestContent content){
-        CommandResult commandResult = null;
-        String login = null;
-        login = content.getRequestParameters().get("login")[0];
+        int userId;
+        int newRoleId;
+        userId = Integer.parseInt(content.getRequestParameters().get("userId")[0]);
+        newRoleId = Integer.parseInt(content.getRequestParameters().get("role")[0]);
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
         transactionExecutor.beginTransaction(userDao);
-        User currentUser = (User) userDao.findUserByLogin(login);
+        User currentUser = (User) userDao.findById(userId);
         transactionExecutor.commit();
-        currentUser.setRole(new Role(1, "admin"));
+        currentUser.setRole(new Role(newRoleId, "user"));
         userDao.update(currentUser);
         transactionExecutor.commit();
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
-        return commandResult;
+        return displayAllUsers(content);
     }
 
     public CommandResult displayAllUsers(RequestContent content){
@@ -103,6 +103,7 @@ public class UserService {
         transactionExecutor.beginTransaction(userDao);
         userList = userDao.findAll();
         transactionExecutor.commit();
+        content.getSessionAttributes().put("users", userList);
         commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
         return commandResult;
     }

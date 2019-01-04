@@ -1,0 +1,13 @@
+.users{
+    display: flex;
+    background: white;
+    border:2px #060d1b solid;
+    margin: 40px 60px;
+    padding: 10px;
+}
+
+.table-head>th{
+    display: flex;
+    margin: 10px;
+    font-size: 20px;
+}

@@ -4,8 +4,8 @@ import com.senchenko.aliens.service.MonsterService;
 import com.senchenko.aliens.service.UserService;
 
 public enum CommandType {
-    LOGIN_PAGE(new UserService()::loginPage),
-    REGISTRATION_PAGE(new UserService()::registrationPage),
+    LOGIN_PAGE(new UserService()::showLoginPage),
+    REGISTRATION_PAGE(new UserService()::showRegistrationPage),
     LOGIN(new UserService()::login),
     LOGOUT(new UserService()::logout),
     REGISTRATION(new UserService()::registration),
@@ -14,8 +14,10 @@ public enum CommandType {
     MONSTERS(new MonsterService()::getMonstersList),
     MONSTER(new MonsterService()::getMonster),
     CHANGE_MONSTER_DESCRIPTION(new MonsterService()::changeMonsterDescription),
-    ADD_MONSTER_PAGE(new MonsterService()::addMonsterPage),
-    ADD_MONSTER(new MonsterService()::addMonster);
+    ADD_MONSTER_PAGE(new MonsterService()::showMonsterPage),
+    ADD_MONSTER(new MonsterService()::addMonster),
+    UPDATE_MONSTER_PAGE(new  MonsterService()::showUpdateMonsterPage),
+    UPDATE_MONSTER(new MonsterService()::updateMonster);
 
     private Command command;
 

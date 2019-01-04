@@ -50,6 +50,7 @@ public class UserDao extends AliensDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SqlQueries.SQL_SELECT_USER_BY_ID);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = new User(
@@ -153,6 +154,7 @@ public class UserDao extends AliensDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getEmail());
+            statement.setInt(6, user.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "SQL exception ", e);
