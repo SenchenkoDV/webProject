@@ -1,5 +1,6 @@
 package com.senchenko.aliens.command;
 
+import com.senchenko.aliens.service.CommentService;
 import com.senchenko.aliens.service.MonsterService;
 import com.senchenko.aliens.service.UserService;
 
@@ -17,7 +18,8 @@ public enum CommandType {
     ADD_MONSTER_PAGE(new MonsterService()::showMonsterPage),
     ADD_MONSTER(new MonsterService()::addMonster),
     UPDATE_MONSTER_PAGE(new  MonsterService()::showUpdateMonsterPage),
-    UPDATE_MONSTER(new MonsterService()::updateMonster);
+    UPDATE_MONSTER(new MonsterService()::updateMonster),
+    ADD_COMMENT(new CommentService()::addComment);
 
     private Command command;
 

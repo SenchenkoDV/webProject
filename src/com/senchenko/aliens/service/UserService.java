@@ -42,11 +42,12 @@ public class UserService {
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("login"));
         }
         else {
-            content.getRequestParameters().put("user", new String[]{currentUser.getLogin()});
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("monsters"));
+            content.getSessionAttributes().put("user", currentUser);
+            commandResult = new MonsterService().getMonstersList(content);
         }
         return commandResult;
     }
+
     public CommandResult logout(RequestContent content){
         return new CommandResult(CommandResult.ResponseType.INVALIDATE, PageManager.getProperty("index"));
     }

@@ -56,6 +56,50 @@ public class CommentDao extends AliensDao {
         return comments;
     }
 
+    public List<Comment> findAllByMonsterId(int monsterId) {
+        List<Comment> comments = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SqlQueries.SQL_SELECT_ALL_COMMENTS_BY_MONSTER_ID);
+            statement.setInt(1, monsterId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                Comment comment = new Comment(
+                        resultSet.getInt("id_comment"),
+                        resultSet.getDate("date"),
+                        new Monster(
+                                resultSet.getInt("id_monster"),
+                                resultSet.getString("name"),
+                                new Race(
+                                        resultSet.getInt("id_race"),
+                                        resultSet.getString("race")),
+                                resultSet.getString("description"),
+                                resultSet.getDouble("average_rating"),
+                                resultSet.getString("picture_address")
+                        ),
+                        resultSet.getInt("mark"),
+                        resultSet.getString("comment"),
+                        new User(
+                                resultSet.getInt("id_user"),
+                                new Role(
+                                        resultSet.getInt("id_role"),
+                                        resultSet.getString("role")),
+                                resultSet.getInt("rating"),
+                                resultSet.getString("login"),
+                                resultSet.getString("password"),
+                                resultSet.getString("email")
+                        )
+                );
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "SQL exception ", e);
+        } finally {
+            this.closeStatement(statement);
+        }
+        return comments;
+    }
+
     @Override
     public Comment findById(int id) {
         Comment comment = null;

@@ -9,29 +9,35 @@ import com.senchenko.aliens.dao.UserDao;
 import com.senchenko.aliens.entity.*;
 import com.senchenko.aliens.manager.PageManager;
 import com.senchenko.aliens.util.UserRatingAction;
+import com.senchenko.aliens.validation.Validator;
+
 import java.sql.Date;
 
 public class CommentService {
+
     public CommandResult addComment(RequestContent content){
         CommandResult commandResult = null;
-        int mark = Integer.parseInt(content.getRequestParameters().get("mark")[0]);
+        String mark = content.getRequestParameters().get("star")[0];
         String comment = content.getRequestParameters().get("comment")[0];
-        CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
-        UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
-        Comment currentComment = new Comment(0,
-                new Date(System.currentTimeMillis()),
-                (Monster) content.getSessionAttributes().get("monster"),
-                mark,
-                comment,
-                (User)content.getSessionAttributes().get("user"));
-        UserRatingAction.updateUserRating(currentComment);
-        TransactionExecutor transactionExecutor = new TransactionExecutor();
-        transactionExecutor.beginTransaction(commentDao);
-        transactionExecutor.beginTransaction(userDao);
-        commentDao.create(currentComment);
-        userDao.update(currentComment.getUser());
-        transactionExecutor.commit();
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
+        if (Validator.fakeValidator()){
+            CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
+            UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
+            Comment currentComment = new Comment(0,
+                    new Date(System.currentTimeMillis()),
+                    (Monster) content.getSessionAttributes().get("monster"),
+                    Integer.valueOf(mark),
+                    comment,
+                    (User)content.getSessionAttributes().get("user"));
+            UserRatingAction.updateUserRating(currentComment);
+            TransactionExecutor transactionExecutor = new TransactionExecutor();
+            transactionExecutor.beginTransaction(commentDao, userDao);
+            commentDao.create(currentComment);
+            userDao.update(currentComment.getUser());
+            transactionExecutor.commit();
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("main"));
+        }else {
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("errorPage"));
+        }
         return commandResult;
     }
 }

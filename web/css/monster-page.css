@@ -1,130 +1,46 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-size: 13px;
-    font-family: 'Arial';
-    min-height: auto;
-    box-sizing: border-box;
-    min-width: auto;
-}
-
-html {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    overflow: auto;
-    min-height: auto;
-    min-width: auto;
-    background: url("/images/background.jpg") no-repeat fixed 95% 0px;
-}
-
-.main-wrap {
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 10px;
-    height: 1300px;
-    opacity: 0.97;
-    width: 900px;
-}
-
-.header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    flex: 0 0 auto;
-    height: 60px;
-    background: #060d1b;
-    order: 1;
-}
-
-.content{
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
-    background: black;
-    order: 2;
-}
-
-.footer{
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: space-around;
-    align-items: center;
-    height: 50px;
-    background: #060d1b;
-    order: 3;
-}
-
-.footer-description{
-    display: flex;
-    color: white;
-}
-
-.header-button{
-    font-size: 15px;
-    margin: 15px;
-    padding: 10px;
-    background: white;
-    text-decoration: none;
-    border-radius: 10px;
-    color: black;
-    outline: none;
-}
-
-.user{
-    font-size: 15px;
-    margin: 15px;
-    padding: 10px;
-    background: white;
-    text-decoration: none;
-    border-radius: 10px;
-    color: red;
-    outline: none;
-}
-
 .monster-description{
     display: flex;
     flex-direction: row;
     align-content: stretch;
     background: white;
-    flex-grow: inherit;
     border-radius: 10px;
-    height: 10px;
+    height: 550px;
     margin: 10px;
 }
 
 .comments{
     display: flex;
     align-content: stretch;
+    flex-direction: column;
     background: white;
     flex-grow: inherit;
     margin: 10px;
     border-radius: 10px;
+    overflow: visible;
 }
 
 .picture{
     display: flex;
-    flex: 4;
-
+    flex: 2;
 }
 
 .image-wrapper{
     display: flex;
     margin: 10px;
+    height: 350px;
+    width: 250px;
+    margin: 10px;
     justify-content: center;
-
 }
 
-.short-description-wrapper{
-    display: flex;
-    flex: 1;
+.current-picture{
+    height: 350px;
+    width: 250px;
 }
+
 .text-description{
     display: flex;
-    flex: 7;
+    flex: 8;
     flex-direction: column;
 
 }
@@ -175,7 +91,7 @@ html {
     align-content: stretch;
     margin: 10px;
     border-radius: 10px;
-    border:2px #060d1b solid;
+    border:4px #060d1b solid;
 }
 
 .image_description{
@@ -222,30 +138,28 @@ html {
 .add-comment{
     background: white;
     max-height: 200px;
-    display: flex;
     justify-content: center;
     align-content: stretch;
-    flex-grow: inherit;
     margin: 10px;
-    flex: 1;
+    padding: 10px;
     border-radius: 10px;
 }
 
 .latest-comments{
-    background: white;
-    max-height: 150px;
+    background: #060d1b;
+    overflow: visible;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    flex-grow: inherit;
-    margin: 10px;
-    flex: 1;
     border-radius: 10px;
 }
 
 .comment-wrapper{
-    margin: 10px;
+    background: white;
+    margin: 7px;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 input.star{
@@ -315,12 +229,13 @@ textarea.review{
 .comment{
     flex: 1 0 auto;
     display: flex;
+    flex-direction: column;
     background: white;
     border: none;
     padding: 10px;
     resize: none;
     outline:none;
-    border:2px #060d1b solid;
+    border:1px #060d1b solid;
     width: 650px;
     height: max-content;
 

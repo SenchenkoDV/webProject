@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
 <head>
@@ -18,14 +19,14 @@
         <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
                 <div class="picture">
-                    <a class="picture-wrapper" href="../web?command=monster&name=${monster.name}">
+                    <a class="picture-wrapper" href="../web?command=monster&monsterId=${monster.monsterId}">
                         <div class="image-wrapper">
                             <img class="current-picture" src="${monster.pictureAddress}">
                         </div>
                         <div class="image_description">
                             <p class="monster-name">${monster.name}</p>
                             <p class="monster-race">Race: ${monster.race.race}</p>
-                            <p class="average-rating">Average rating: ${monster.averageRating}</p>
+                            <p class="average-rating">Average rating: <fmt:formatNumber value="${monster.averageRating}" maxFractionDigits="2"/></p>
                         </div>
                     </a>
                     <a class="edit-monster" href="../web?command=update-monster-page&name=${monster.name}">Edit</a>

@@ -2,10 +2,8 @@ package com.senchenko.aliens.service;
 
 import com.senchenko.aliens.content.CommandResult;
 import com.senchenko.aliens.content.RequestContent;
-import com.senchenko.aliens.dao.MonsterDao;
-import com.senchenko.aliens.dao.RaceDao;
-import com.senchenko.aliens.dao.SingletonDaoProvider;
-import com.senchenko.aliens.dao.TransactionExecutor;
+import com.senchenko.aliens.dao.*;
+import com.senchenko.aliens.entity.Comment;
 import com.senchenko.aliens.entity.Monster;
 import com.senchenko.aliens.entity.Race;
 import com.senchenko.aliens.manager.MessageManager;
@@ -29,13 +27,17 @@ public class MonsterService {
     public CommandResult getMonster(RequestContent content){
         CommandResult commandResult = null;
         Monster currentMonster = null;
-        String monsterName = content.getRequestParameters().get("name")[0];
+        List<Comment> comments = null;
+        int monsterId = Integer.parseInt(content.getRequestParameters().get("monsterId")[0]);
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+        CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
-        transactionExecutor.beginTransaction(monsterDao);
-        currentMonster = (Monster) monsterDao.findByName(monsterName);
+        transactionExecutor.beginTransaction(monsterDao, commentDao);
+        currentMonster = (Monster) monsterDao.findById(monsterId);
+        comments = commentDao.findAllByMonsterId(monsterId);
         transactionExecutor.commit();
         content.getSessionAttributes().put("monster", currentMonster);
+        content.getSessionAttributes().put("comments", comments);
         commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("main"));
         return commandResult;
     }

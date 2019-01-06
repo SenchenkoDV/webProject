@@ -7,6 +7,13 @@ public class SqlQueries {
                     "JOIN races ON monsters.id_race = races.id_race " +
                     "JOIN users ON comments.id_user = users.id_user " +
                     "JOIN roles ON users.id_role = roles.id_role";
+    public static final String SQL_SELECT_ALL_COMMENTS_BY_MONSTER_ID =
+            "SELECT * FROM comments " +
+                    "JOIN monsters ON comments.id_monster = monsters.id_monster " +
+                    "JOIN races ON monsters.id_race = races.id_race " +
+                    "JOIN users ON comments.id_user = users.id_user " +
+                    "JOIN roles ON users.id_role = roles.id_role " +
+                    "WHERE comments.id_monster = ?";
     public static final String SQL_SELECT_COMMENT_BY_ID =
             "SELECT * FROM comments " +
                     "JOIN monsters ON comments.id_monster = monsters.id_monster " +
