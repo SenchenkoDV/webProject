@@ -21,29 +21,29 @@ public class CommentDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Comment comment = new Comment(
-                        resultSet.getInt("id_comment"),
-                        resultSet.getDate("date"),
+                        resultSet.getInt(SqlQueries.ID_COMMENT),
+                        resultSet.getDate(SqlQueries.DATE),
                         new Monster(
-                                resultSet.getInt("id_monster"),
-                                resultSet.getString("name"),
+                                resultSet.getInt(SqlQueries.ID_MONSTER),
+                                resultSet.getString(SqlQueries.NAME),
                                 new Race(
-                                        resultSet.getInt("id_race"),
-                                        resultSet.getString("race")),
-                                resultSet.getString("description"),
-                                resultSet.getDouble("average_rating"),
-                                resultSet.getString("picture_address")
+                                        resultSet.getInt(SqlQueries.ID_RACE),
+                                        resultSet.getString(SqlQueries.RACE)),
+                                resultSet.getString(SqlQueries.DESCRIPTION),
+                                resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                                resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                         ),
-                        resultSet.getInt("mark"),
-                        resultSet.getString("comment"),
+                        resultSet.getInt(SqlQueries.MARK),
+                        resultSet.getString(SqlQueries.COMMENT),
                         new User(
-                                resultSet.getInt("id_user"),
+                                resultSet.getInt(SqlQueries.ID_USER),
                                 new Role(
-                                        resultSet.getInt("id_role"),
-                                        resultSet.getString("role")),
-                                resultSet.getInt("rating"),
-                                resultSet.getString("login"),
-                                resultSet.getString("password"),
-                                resultSet.getString("email")
+                                        resultSet.getInt(SqlQueries.ID_ROLE),
+                                        resultSet.getString(SqlQueries.ROLE)),
+                                resultSet.getInt(SqlQueries.RATING),
+                                resultSet.getString(SqlQueries.LOGIN),
+                                resultSet.getString(SqlQueries.PASSWORD),
+                                resultSet.getString(SqlQueries.EMAIL)
                         )
                 );
                 comments.add(comment);
@@ -65,29 +65,29 @@ public class CommentDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Comment comment = new Comment(
-                        resultSet.getInt("id_comment"),
-                        resultSet.getDate("date"),
+                        resultSet.getInt(SqlQueries.ID_COMMENT),
+                        resultSet.getDate(SqlQueries.DATE),
                         new Monster(
-                                resultSet.getInt("id_monster"),
-                                resultSet.getString("name"),
+                                resultSet.getInt(SqlQueries.ID_MONSTER),
+                                resultSet.getString(SqlQueries.NAME),
                                 new Race(
-                                        resultSet.getInt("id_race"),
-                                        resultSet.getString("race")),
-                                resultSet.getString("description"),
-                                resultSet.getDouble("average_rating"),
-                                resultSet.getString("picture_address")
+                                        resultSet.getInt(SqlQueries.ID_RACE),
+                                        resultSet.getString(SqlQueries.RACE)),
+                                resultSet.getString(SqlQueries.DESCRIPTION),
+                                resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                                resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                         ),
-                        resultSet.getInt("mark"),
-                        resultSet.getString("comment"),
+                        resultSet.getInt(SqlQueries.MARK),
+                        resultSet.getString(SqlQueries.COMMENT),
                         new User(
-                                resultSet.getInt("id_user"),
+                                resultSet.getInt(SqlQueries.ID_USER),
                                 new Role(
-                                        resultSet.getInt("id_role"),
-                                        resultSet.getString("role")),
-                                resultSet.getInt("rating"),
-                                resultSet.getString("login"),
-                                resultSet.getString("password"),
-                                resultSet.getString("email")
+                                        resultSet.getInt(SqlQueries.ID_ROLE),
+                                        resultSet.getString(SqlQueries.ROLE)),
+                                resultSet.getInt(SqlQueries.RATING),
+                                resultSet.getString(SqlQueries.LOGIN),
+                                resultSet.getString(SqlQueries.PASSWORD),
+                                resultSet.getString(SqlQueries.EMAIL)
                         )
                 );
                 comments.add(comment);
@@ -110,29 +110,29 @@ public class CommentDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 comment = new Comment(
-                        resultSet.getInt("id_comment"),
-                        resultSet.getDate("date"),
+                        resultSet.getInt(SqlQueries.ID_COMMENT),
+                        resultSet.getDate(SqlQueries.DATE),
                         new Monster(
-                                resultSet.getInt("id_monster"),
-                                resultSet.getString("name"),
+                                resultSet.getInt(SqlQueries.ID_MONSTER),
+                                resultSet.getString(SqlQueries.NAME),
                                 new Race(
-                                        resultSet.getInt("id_race"),
-                                        resultSet.getString("role")),
-                                resultSet.getString("description"),
-                                resultSet.getDouble("average_rating"),
-                                resultSet.getString("picture_address")
+                                        resultSet.getInt(SqlQueries.ID_RACE),
+                                        resultSet.getString(SqlQueries.RACE)),
+                                resultSet.getString(SqlQueries.DESCRIPTION),
+                                resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                                resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                         ),
-                        resultSet.getInt("mark"),
-                        resultSet.getString("comment"),
+                        resultSet.getInt(SqlQueries.MARK),
+                        resultSet.getString(SqlQueries.COMMENT),
                         new User(
-                                resultSet.getInt("id_user"),
+                                resultSet.getInt(SqlQueries.ID_USER),
                                 new Role(
-                                        resultSet.getInt("id_role"),
-                                        resultSet.getString("role")),
-                                resultSet.getInt("rating"),
-                                resultSet.getString("login"),
-                                resultSet.getString("password"),
-                                resultSet.getString("email")
+                                        resultSet.getInt(SqlQueries.ID_ROLE),
+                                        resultSet.getString(SqlQueries.ROLE)),
+                                resultSet.getInt(SqlQueries.RATING),
+                                resultSet.getString(SqlQueries.LOGIN),
+                                resultSet.getString(SqlQueries.PASSWORD),
+                                resultSet.getString(SqlQueries.EMAIL)
                         )
                 );
             }

@@ -41,7 +41,8 @@ INSERT INTO `comments` (`id_comment`, `date`, `id_monster`, `mark`, `comment`, `
 	(8, '2018-12-18 00:00:00', 1, 8, 'good hero', 1),
 	(9, '2018-12-18 00:00:00', 1, 8, 'good hero', 1),
 	(10, '2018-12-18 00:00:00', 1, 8, 'good', 1),
-	(11, '2019-01-02 00:00:00', 1, 8, 'good', 1);
+	(11, '2019-01-02 00:00:00', 1, 8, 'good', 1),
+	(12, '2019-01-06 00:00:00', 1, 6, 'test comment from fromt', 1);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 
 -- Дамп структуры для таблица monsters.monsters
@@ -57,14 +58,13 @@ CREATE TABLE IF NOT EXISTS `monsters` (
   CONSTRAINT `fk_Monsters_Races1` FOREIGN KEY (`id_race`) REFERENCES `races` (`id_race`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Дамп данных таблицы monsters.monsters: ~4 rows (приблизительно)
+-- Дамп данных таблицы monsters.monsters: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `monsters` DISABLE KEYS */;
 INSERT INTO `monsters` (`id_monster`, `name`, `id_race`, `description`, `average_rating`, `picture_address`) VALUES
-	(1, 'Captain Marvel', 1, 'Captain Marvel (Mar-Vell) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and designed by artist Gene Colan and first appeared in Marvel Super-Heroes #12 (December 1967).\r\n\r\nThe character debuted during the Silver Age of comic books and has made many appearances since then, including a self-titled series and the second volume of the Marvel Spotlight series. Captain Marvel was ranked 24th in IGN\'s list of "The Top 50 Avengers"[1] and has appeared in television series and video games.\r\n\r\nJude Law will portray Mar-Vell in the Marvel Studios film Captain Marvel, to be released in 2019.', 7.5, '/images/heroes/250px-Captain_Marvel_29.jpg'),
-	(2, 'Ronan the Accuser', 1, 'Ronan the Accuser is a fictional character appearing in American comic books published by Marvel Comics. He is the Supreme Accuser of the Kree Empire, the militaristic government of the fictional alien race known as the Kree, and is commonly depicted as an adversary of superhero teams such as the Fantastic Four, the Avengers, and the Guardians of the Galaxy.\r\n\r\nThe character has been substantially adapted from the comics into various forms of media, including several animated television series and video games. Most notably, actor Lee Pace portrays Ronan in the live-action Marvel Cinematic Universe films Guardians of the Galaxy and Captain Marvel.', NULL, '/images/heroes\\250px-Captain_Marvel_29.jpg'),
+	(1, 'Captain Marvel', 1, 'Captain Marvel (Mar-Vell) is a fictional superhero appearing in American comic books published by Marvel Comics. The character was created by writer-editor Stan Lee and designed by artist Gene Colan and first appeared in Marvel Super-Heroes #12 (December 1967).\r\n\r\n   The character debuted during the Silver Age of comic books and has made many appearances since then, including a self-titled series and the second volume of the Marvel Spotlight series. Captain Marvel was ranked 24th in IGN\'s list of "The Top 50 Avengers" and has appeared in television series and video games.\r\n\r\nJude Law will portray Mar-Vell in the Marvel Studios film Captain Marvel, to be released in 2019.\r\n                    \r\n                    \r\n                    \r\n                    \r\n                    \r\n                    ', 7.285714285, '/images/heroes/250px-Captain_Marvel_29.jpg'),
+	(2, 'Ronan the Accuser', 1, 'Ronan the Accuser is a fictional character appearing in American comic books published by Marvel Comics. He is the Supreme Accuser of the Kree Empire, the militaristic government of the fictional alien race known as the Kree, and is commonly depicted as an adversary of superhero teams such as the Fantastic Four, the Avengers, and the Guardians of the Galaxy.\r\n\r\nThe character has been substantially adapted from the comics into various forms of media, including several animated television series and video games. Most notably, actor Lee Pace portrays Ronan in the live-action Marvel Cinematic Universe films Guardians of the Galaxy and Captain Marvel.', 0, '/images/heroes\\250px-Captain_Marvel_29.jpg'),
 	(3, 'Korg', 2, 'Korg is a fictional character appearing in American comic books published by Marvel Comics. Created by writer Greg Pak and artist Carlo Pagulayan, the character first appeared in Incredible Hulk vol. 2 #93 during the "Planet Hulk" storyline.\r\n\r\nKorg appears in Thor: Ragnarok, portrayed by director Taika Waititi through the use of motion capture.', NULL, '/images/heroes\\250px-Captain_Marvel_29.jpg'),
-	(4, 'Gamora', 3, 'Gamora Zen Whoberi Ben Titan (/ɡəˈmɔːrə/) is a fictional character appearing in American comic books published by Marvel Comics. Created by writer/artist Jim Starlin, the character first appeared in Strange Tales #180 (June 1975). Gamora is the adopted daughter of Thanos, and the last of her species. Her powers include superhuman strength and agility and an accelerated healing factor. She also is an elite combatant, being able to beat most of the opponents in the galaxy. She is a member of the group known as the Infinity Watch. The character played a role in the 2007 crossover comic book event "Annihilation: Conquest", and became a member of the titular team in its spin-off comic, Guardians of the Galaxy.', NULL, '/images/heroes\\Avengers_Infinity_War_Gamora_Poster.jpg'),
-	(13, 'TestHero2', 1, 'asdfgdsagsdag', 0, '\\images/heroes\\t3rb6urjrwr8deskks8viogpdh8.jpeg');
+	(4, 'Gamora', 3, 'Gamora Zen Whoberi Ben Titan (/ɡəˈmɔːrə/) is a fictional character appearing in American comic books published by Marvel Comics. Created by writer/artist Jim Starlin, the character first appeared in Strange Tales #180 (June 1975). Gamora is the adopted daughter of Thanos, and the last of her species. Her powers include superhuman strength and agility and an accelerated healing factor. She also is an elite combatant, being able to beat most of the opponents in the galaxy. She is a member of the group known as the Infinity Watch. The character played a role in the 2007 crossover comic book event "Annihilation: Conquest", and became a member of the titular team in its spin-off comic, Guardians of the Galaxy.', NULL, '/images/heroes\\Avengers_Infinity_War_Gamora_Poster.jpg');
 /*!40000 ALTER TABLE `monsters` ENABLE KEYS */;
 
 -- Дамп структуры для таблица monsters.races
@@ -74,14 +74,13 @@ CREATE TABLE IF NOT EXISTS `races` (
   PRIMARY KEY (`id_race`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- Дамп данных таблицы monsters.races: ~4 rows (приблизительно)
+-- Дамп данных таблицы monsters.races: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `races` DISABLE KEYS */;
 INSERT INTO `races` (`id_race`, `race`) VALUES
 	(1, 'Kree'),
 	(2, 'Kronan'),
 	(3, 'Zen-Whoberis'),
-	(4, 'testPace'),
-	(5, '');
+	(4, 'testPace');
 /*!40000 ALTER TABLE `races` ENABLE KEYS */;
 
 -- Дамп структуры для таблица monsters.roles
@@ -95,7 +94,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id_role`, `role`) VALUES
 	(1, 'admin'),
-	(2, 'user');
+	(2, 'user'),
+	(3, 'banned');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- Дамп структуры для таблица monsters.users
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы monsters.users: ~14 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id_user`, `id_role`, `rating`, `login`, `password`, `email`) VALUES
-	(1, 1, NULL, 'admin', 'adminPass', 'admin@gmail.com'),
+	(1, 1, 1, 'admin', 'adminPass', 'admin@gmail.com'),
 	(2, 2, NULL, 'user', 'userPass', 'user@gmail.com'),
 	(3, 2, 0, 'ussssser', '12345', 'emaiiiiil'),
 	(4, 2, 0, 'ussssser', '12345', 'emaiiiiil'),
@@ -127,7 +127,7 @@ INSERT INTO `users` (`id_user`, `id_role`, `rating`, `login`, `password`, `email
 	(11, 2, 0, 'user11', 'pass11', 'email11'),
 	(12, 2, 0, 'user12', 'pass12', 'email12'),
 	(13, 2, 0, 'user13', 'pass13', 'email13'),
-	(14, 2, 0, 'user14', 'pass14', 'email14');
+	(14, 3, 0, 'user14', 'pass14', 'email14');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Дамп структуры для триггер monsters.update_monster _average_rating

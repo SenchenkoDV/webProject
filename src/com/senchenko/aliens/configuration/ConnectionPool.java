@@ -10,8 +10,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public enum ConnectionPool{
     INSTANCE;
+    private static final String DATABASE_PROPERTY = "property.database";
     private final Logger LOGGER = LogManager.getLogger();
-    private ResourceBundle resource = ResourceBundle.getBundle("property.database");
+    private ResourceBundle resource = ResourceBundle.getBundle(DATABASE_PROPERTY);
     private final int POOL_SIZE = Integer.parseInt(resource.getString("poolSize"));
     private ArrayBlockingQueue<ProxyConnection> connectionQueue;
 

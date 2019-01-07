@@ -25,14 +25,14 @@ public class UserDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = new User(
-                        resultSet.getInt("id_user"),
+                        resultSet.getInt(SqlQueries.ID_USER),
                         new Role(
-                                resultSet.getInt("id_role"),
-                                resultSet.getString("role")),
-                        resultSet.getInt("rating"),
-                        resultSet.getString("login"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email")
+                                resultSet.getInt(SqlQueries.ID_ROLE),
+                                resultSet.getString(SqlQueries.ROLE)),
+                        resultSet.getInt(SqlQueries.RATING),
+                        resultSet.getString(SqlQueries.LOGIN),
+                        resultSet.getString(SqlQueries.PASSWORD),
+                        resultSet.getString(SqlQueries.EMAIL)
                 );
                 users.add(user);
             }
@@ -54,14 +54,14 @@ public class UserDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = new User(
-                        resultSet.getInt("id_user"),
+                        resultSet.getInt(SqlQueries.ID_USER),
                         new Role(
-                                resultSet.getInt("id_role"),
-                                resultSet.getString("role")),
-                        resultSet.getInt("rating"),
-                        resultSet.getString("login"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email")
+                                resultSet.getInt(SqlQueries.ID_ROLE),
+                                resultSet.getString(SqlQueries.ROLE)),
+                        resultSet.getInt(SqlQueries.RATING),
+                        resultSet.getString(SqlQueries.LOGIN),
+                        resultSet.getString(SqlQueries.PASSWORD),
+                        resultSet.getString(SqlQueries.EMAIL)
                 );
             }
         } catch (SQLException e) {
@@ -80,14 +80,14 @@ public class UserDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = new User(
-                        resultSet.getInt("id_user"),
+                        resultSet.getInt(SqlQueries.ID_USER),
                         new Role(
-                                resultSet.getInt("id_role"),
-                                resultSet.getString("role")),
-                        resultSet.getInt("rating"),
-                        resultSet.getString("login"),
-                        resultSet.getString("password"),
-                        resultSet.getString("email")
+                                resultSet.getInt(SqlQueries.ID_ROLE),
+                                resultSet.getString(SqlQueries.ROLE)),
+                        resultSet.getInt(SqlQueries.RATING),
+                        resultSet.getString(SqlQueries.LOGIN),
+                        resultSet.getString(SqlQueries.PASSWORD),
+                        resultSet.getString(SqlQueries.EMAIL)
                 );
             }
         } catch (SQLException e) {

@@ -11,16 +11,33 @@ import com.senchenko.aliens.manager.PageManager;
 import java.util.List;
 
 public class MonsterService {
+    private static final int DEFAULT_ID = 0;
+    private static final Double DEFAULT_AVERAGE_RATING = 0.0;
+    private static final String MONSTERS_ATTRIBUTE = "monsters";
+    private static final String MONSTER_ATTRIBUTE = "monster";
+    private static final String COMMENTS_ATTRIBUTE = "comments";
+    private static final String FILE_PATH_ATTRIBUTE = "filePath";
+    private static final String RESULT_ATTRIBUTE = "result";
+    private static final String MONSTERS_PROPERTY = "monsters";
+    private static final String MONSTER_PAGE_PROPERTY = "monsterPage";
+    private static final String ADD_MONSTER_PROPERTY = "addMonster";
+    private static final String UPDATE_MONSTER_PROPERTY = "updateMonster";
+    private static final String MONSTERS_ID_PARAMETER = "monsterId";
+    private static final String DESCRIPTION_PARAMETER = "description";
+    private static final String NAME_PARAMETER = "name";
+    private static final String RACE_PARAMETER = "race";
+    private static final String SUCCESSFUL_CREATE_MONSTER_MESSAGE = "successfulCreateMonster";
+    private static final String SUCCESSFUL_UPDATE_MONSTER_MESSAGE = "successfulUpdateMonster";
 
-    public CommandResult getMonstersList(RequestContent content){
+    public CommandResult showMonstersPage(RequestContent content){
         CommandResult commandResult = null;
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         transactionExecutor.beginTransaction(monsterDao);
         List<Monster> monsters = monsterDao.findAll();
         transactionExecutor.commit();
-        content.getSessionAttributes().put("monsters", monsters);
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("monsters"));
+        content.getSessionAttributes().put(MONSTERS_ATTRIBUTE, monsters);
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(MONSTERS_PROPERTY));
         return commandResult;
     }
 
@@ -28,7 +45,7 @@ public class MonsterService {
         CommandResult commandResult = null;
         Monster currentMonster = null;
         List<Comment> comments = null;
-        int monsterId = Integer.parseInt(content.getRequestParameters().get("monsterId")[0]);
+        int monsterId = Integer.parseInt(content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0]);
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
@@ -36,51 +53,51 @@ public class MonsterService {
         currentMonster = (Monster) monsterDao.findById(monsterId);
         comments = commentDao.findAllByMonsterId(monsterId);
         transactionExecutor.commit();
-        content.getSessionAttributes().put("monster", currentMonster);
-        content.getSessionAttributes().put("comments", comments);
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("main"));
+        content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
+        content.getSessionAttributes().put(COMMENTS_ATTRIBUTE, comments);
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(MONSTER_PAGE_PROPERTY));
         return commandResult;
     }
 
     public CommandResult changeMonsterDescription(RequestContent content){
         CommandResult commandResult = null;
-        String changedMonsterDescription = content.getRequestParameters().get("description")[0];
-        Monster currentMonster = (Monster) content.getSessionAttributes().get("monster");
+        String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        Monster currentMonster = (Monster) content.getSessionAttributes().get(MONSTER_ATTRIBUTE);
         currentMonster.setDescription(changedMonsterDescription);
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         transactionExecutor.beginTransaction(monsterDao);
         monsterDao.update(currentMonster);
         transactionExecutor.commit();
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("main"));
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(MONSTER_PAGE_PROPERTY));
         return commandResult;
     }
 
-    public CommandResult showMonsterPage(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("addMonster"));
+    public CommandResult addMonsterPage(RequestContent content){
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(ADD_MONSTER_PROPERTY));
     }
 
     public CommandResult addMonster(RequestContent content){
         CommandResult commandResult = null;
-        String picturePath = (String) content.getRequestAttributes().get("filePath");
-        String name = content.getRequestParameters().get("name")[0];
-        String description = content.getRequestParameters().get("description")[0];
-        String raceName = content.getRequestParameters().get("race")[0];
+        String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
+        String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
+        String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
         transactionExecutor.beginTransaction(raceDao);
         Race race = (Race) raceDao.findByRace(raceName);
         transactionExecutor.commit();
         if (race == null){
-            raceDao.create(new Race(0, raceName));
+            raceDao.create(new Race(DEFAULT_ID, raceName));
             transactionExecutor.commit();
         }
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         transactionExecutor.beginTransaction(monsterDao);
-        monsterDao.create(new Monster(0, name, race, description, 0., picturePath));
+        monsterDao.create(new Monster(DEFAULT_ID, name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
         transactionExecutor.commit();
-        content.getSessionAttributes().put("result", MessageManager.EN.getMessage("successfulCreateMonster"));
-        commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("addMonster"));
+        content.getSessionAttributes().put(RESULT_ATTRIBUTE, MessageManager.EN.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
+        commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(ADD_MONSTER_PROPERTY));
         return commandResult;
     }
 
@@ -88,35 +105,34 @@ public class MonsterService {
         MonsterDao monsterDao = new MonsterDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         transactionExecutor.beginTransaction(monsterDao);
-        Monster currentMonster = (Monster) monsterDao.findByName(content.getRequestParameters().get("name")[0]);
-        content.getSessionAttributes().put("monster", currentMonster);
+        Monster currentMonster = (Monster) monsterDao.findByName(content.getRequestParameters().get(NAME_PARAMETER)[0]);
+        content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
         transactionExecutor.commit();
-        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("updateMonster"));
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
     }
 
     public CommandResult updateMonster(RequestContent content){
         CommandResult commandResult = null;
-        int updatedMonsterId = Integer.parseInt(content.getRequestParameters().get("monster-id")[0]);
-        String picturePath = (String) content.getRequestAttributes().get("filePath");
-        String name = content.getRequestParameters().get("name")[0];
-        String description = content.getRequestParameters().get("description")[0];
-        String raceName = content.getRequestParameters().get("race")[0];
+        int updatedMonsterId = Integer.parseInt(content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0]);
+        String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
+        String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
+        String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
         transactionExecutor.beginTransaction(raceDao);
         Race race = (Race) raceDao.findByRace(raceName);
         transactionExecutor.commit();
         if (race == null){
-            raceDao.create(new Race(0, raceName));
+            raceDao.create(new Race(DEFAULT_ID, raceName));
             transactionExecutor.commit();
         }
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         transactionExecutor.beginTransaction(monsterDao);
-        monsterDao.update(new Monster(updatedMonsterId, name, race, description, 0., picturePath));
+        monsterDao.update(new Monster(updatedMonsterId, name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
         transactionExecutor.commit();
-        content.getSessionAttributes().put("result", MessageManager.EN.getMessage("successfulUpdateMonster"));
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("updateMonster"));
+        content.getSessionAttributes().put(RESULT_ATTRIBUTE, MessageManager.EN.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
         return commandResult;
     }
-
 }

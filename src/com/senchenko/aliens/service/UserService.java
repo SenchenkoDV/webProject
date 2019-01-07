@@ -9,27 +9,39 @@ import com.senchenko.aliens.entity.Role;
 import com.senchenko.aliens.entity.User;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
-import com.sun.istack.internal.NotNull;
-
 import java.util.List;
 
 public class UserService {
-    private static final Role DEFAULT_USER_ROLE = new Role(2, "user");
-    private static final int DEFAULT_USER_ID = 0;
+    private static final int DEFAULT_ID = 0;
     private static final int DEFAULT_USER_RATING = 0;
+    private static final String DEFAULT_ROLE = "user";
+    private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "successfulCreateMonster";
+    private static final String USER_ATTRIBUTE = "user";
+    private static final String RESULT_ATTRIBUTE = "result";
+    private static final String USERS_ATTRIBUTE = "users";
+    private static final String LOGIN_PROPERTY = "login";
+    private static final String REGISTRATION_PROPERTY = "registration";
+    private static final String USERS_PROPERTY = "users";
+    private static final String LOGIN_PARAMETER = "login";
+    private static final String PASSWORD_PARAMETER = "password";
+    private static final String EMAIL_PARAMETER = "email";
+    private static final String USER_ID_PARAMETER = "userId";
+    private static final String ROLE_PARAMETER = "role";
+    private static final String LOGIN_ERROR_MESSAGE = "successfulCreateMonster";
+    private static final String CREATE_USER_ERROR_MESSAGE = "createUserError";
 
     public CommandResult showLoginPage(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("login"));
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(LOGIN_PROPERTY));
     }
 
     public CommandResult showRegistrationPage(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty("registration"));
+        return new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(REGISTRATION_PROPERTY));
     }
 
     public CommandResult login(RequestContent content){
         CommandResult commandResult = null;
-        String[] enterLogin = content.getRequestParameters().get("login");
-        String[] enterPass = content.getRequestParameters().get("password");
+        String[] enterLogin = content.getRequestParameters().get(LOGIN_PARAMETER);
+        String[] enterPass = content.getRequestParameters().get(PASSWORD_PARAMETER);
 
         UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
@@ -38,26 +50,25 @@ public class UserService {
         transactionExecutor.commit();
         if (enterLogin == null || enterPass == null || currentUser == null || (currentUser.getLogin().equals(enterLogin) &&
                 currentUser.getPassword().equals(enterPass))){
-            content.getRequestParameters().put("errorLoginPassMessage", new String[]{MessageManager.EN.getMessage("loginError")});
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("login"));
+            content.getRequestAttributes().put(ERROR_LOGIN_PASS_ATTRIBUTE, MessageManager.EN.getMessage(LOGIN_ERROR_MESSAGE));
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(LOGIN_PROPERTY));
         }
         else {
-            content.getSessionAttributes().put("user", currentUser);
-            commandResult = new MonsterService().getMonstersList(content);
+            content.getSessionAttributes().put(USER_ATTRIBUTE, currentUser);
+            commandResult = new MonsterService().showMonstersPage(content);
         }
         return commandResult;
     }
 
     public CommandResult logout(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.INVALIDATE, PageManager.getProperty("index"));
+        return new CommandResult(CommandResult.ResponseType.INVALIDATE, PageManager.getProperty(LOGIN_PROPERTY));
     }
 
     public CommandResult registration(RequestContent content){
-        System.out.println("registration start");
         CommandResult commandResult = null;
-        String[] enterLogin = content.getRequestParameters().get("login");
-        String[] enterPass = content.getRequestParameters().get("password");
-        String[] enterEmail = content.getRequestParameters().get("email");
+        String[] enterLogin = content.getRequestParameters().get(LOGIN_PARAMETER);
+        String[] enterPass = content.getRequestParameters().get(PASSWORD_PARAMETER);
+        String[] enterEmail = content.getRequestParameters().get(EMAIL_PARAMETER);
 
         UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
@@ -66,31 +77,31 @@ public class UserService {
         transactionExecutor.commit();
 
         if (createdUser == null) {
-            createdUser = new User(DEFAULT_USER_ID, DEFAULT_USER_ROLE, DEFAULT_USER_RATING,
+            createdUser = new User(DEFAULT_ID, new Role(DEFAULT_ID, DEFAULT_ROLE), DEFAULT_USER_RATING,
                     enterLogin[0], enterPass[0], enterEmail[0]);
             transactionExecutor.beginTransaction(userDao);
             userDao.create(createdUser);
             transactionExecutor.commit();
             commandResult = login(content);
         }else {
-            content.getRequestParameters().put("result", new String[]{createdUser.getLogin() +
-                    MessageManager.EN.getMessage("createUserError")});
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("index"));
+            content.getRequestAttributes().put(RESULT_ATTRIBUTE, createdUser.getLogin() +
+                    MessageManager.EN.getMessage(CREATE_USER_ERROR_MESSAGE));
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(LOGIN_PROPERTY));
         }
         return commandResult;
     }
 
-    public CommandResult changeRating(RequestContent content){
+    public CommandResult changeRole(RequestContent content){
         int userId;
         int newRoleId;
-        userId = Integer.parseInt(content.getRequestParameters().get("userId")[0]);
-        newRoleId = Integer.parseInt(content.getRequestParameters().get("role")[0]);
+        userId = Integer.parseInt(content.getRequestParameters().get(USER_ID_PARAMETER)[0]);
+        newRoleId = Integer.parseInt(content.getRequestParameters().get(ROLE_PARAMETER)[0]);
         TransactionExecutor transactionExecutor = new TransactionExecutor();
         UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
         transactionExecutor.beginTransaction(userDao);
         User currentUser = (User) userDao.findById(userId);
         transactionExecutor.commit();
-        currentUser.setRole(new Role(newRoleId, "user"));
+        currentUser.setRole(new Role(newRoleId, DEFAULT_ROLE));
         userDao.update(currentUser);
         transactionExecutor.commit();
         return displayAllUsers(content);
@@ -104,8 +115,8 @@ public class UserService {
         transactionExecutor.beginTransaction(userDao);
         userList = userDao.findAll();
         transactionExecutor.commit();
-        content.getSessionAttributes().put("users", userList);
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty("users"));
+        content.getSessionAttributes().put(USERS_ATTRIBUTE, userList);
+        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(USERS_PROPERTY));
         return commandResult;
     }
 }

@@ -25,14 +25,14 @@ public class MonsterDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Monster monster = new Monster(
-                        resultSet.getInt("id_monster"),
-                        resultSet.getString("name"),
+                        resultSet.getInt(SqlQueries.ID_MONSTER),
+                        resultSet.getString(SqlQueries.NAME),
                         new Race(
-                                resultSet.getInt("id_race"),
-                                resultSet.getString("race")),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("average_rating"),
-                        resultSet.getString("picture_address")
+                                resultSet.getInt(SqlQueries.ID_RACE),
+                                resultSet.getString(SqlQueries.RACE)),
+                        resultSet.getString(SqlQueries.DESCRIPTION),
+                        resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                        resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                 );
                 monsters.add(monster);
             }
@@ -54,14 +54,14 @@ public class MonsterDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 monster = new Monster(
-                        resultSet.getInt("id_monster"),
-                        resultSet.getString("name"),
+                        resultSet.getInt(SqlQueries.ID_MONSTER),
+                        resultSet.getString(SqlQueries.NAME),
                         new Race(
-                                resultSet.getInt("id_race"),
-                                resultSet.getString("race")),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("average_rating"),
-                        resultSet.getString("picture_address")
+                                resultSet.getInt(SqlQueries.ID_RACE),
+                                resultSet.getString(SqlQueries.RACE)),
+                        resultSet.getString(SqlQueries.DESCRIPTION),
+                        resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                        resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                 );
             }
         } catch (SQLException e) {
@@ -81,14 +81,14 @@ public class MonsterDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 monster = new Monster(
-                        resultSet.getInt("id_monster"),
-                        resultSet.getString("name"),
+                        resultSet.getInt(SqlQueries.ID_MONSTER),
+                        resultSet.getString(SqlQueries.NAME),
                         new Race(
-                                resultSet.getInt("id_race"),
-                                resultSet.getString("race")),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("average_rating"),
-                        resultSet.getString("picture_address")
+                                resultSet.getInt(SqlQueries.ID_RACE),
+                                resultSet.getString(SqlQueries.RACE)),
+                        resultSet.getString(SqlQueries.DESCRIPTION),
+                        resultSet.getDouble(SqlQueries.AVERAGE_RATING),
+                        resultSet.getString(SqlQueries.PICTURE_ADDRESS)
                 );
             }
         } catch (SQLException e) {

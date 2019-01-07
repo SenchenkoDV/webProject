@@ -1,6 +1,25 @@
 package com.senchenko.aliens.util;
 
 public class SqlQueries {
+    public static final String ID_COMMENT = "id_comment";
+    public static final String DATE = "date";
+    public static final String ID_MONSTER = "id_monster";
+    public static final String NAME = "name";
+    public static final String ID_RACE = "id_race";
+    public static final String RACE = "race";
+    public static final String DESCRIPTION = "description";
+    public static final String AVERAGE_RATING = "average_rating";
+    public static final String PICTURE_ADDRESS = "picture_address";
+    public static final String MARK = "mark";
+    public static final String COMMENT = "comment";
+    public static final String ID_USER = "id_user";
+    public static final String ID_ROLE = "id_role";
+    public static final String ROLE = "role";
+    public static final String RATING = "rating";
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
+    public static final String EMAIL = "email";
+
     public static final String SQL_SELECT_ALL_COMMENTS =
             "SELECT * FROM comments " +
                     "JOIN monsters ON comments.id_monster = monsters.id_monster " +

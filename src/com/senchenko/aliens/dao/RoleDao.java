@@ -26,8 +26,8 @@ public class RoleDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Role role = new Role(
-                        resultSet.getInt("id_role"),
-                        resultSet.getString("role")
+                        resultSet.getInt(SqlQueries.ID_ROLE),
+                        resultSet.getString(SqlQueries.ROLE)
                 );
                 roles.add(role);
             }
@@ -48,8 +48,8 @@ public class RoleDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 role = new Role(
-                        resultSet.getInt("id_role"),
-                        resultSet.getString("role")
+                        resultSet.getInt(SqlQueries.ID_ROLE),
+                        resultSet.getString(SqlQueries.ROLE)
                 );
             }
         } catch (SQLException e) {

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 public abstract class AliensDao<T extends Entity> implements CrudDao {
     private static final Logger LOGGER = LogManager.getLogger();

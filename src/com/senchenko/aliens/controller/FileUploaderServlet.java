@@ -1,5 +1,6 @@
 package com.senchenko.aliens.controller;
 
+import com.senchenko.aliens.manager.MessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,10 @@ import java.io.IOException;
 public class FileUploaderServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
     private static final String UPLOAD_DIR = "images/heroes";
+    private static final String FILE_PASS_ATTRIBUTE = "filePath";
+    private static final String RESULT_ATTRIBUTE = "result";
+    private static final String ALIENS_SERVLET_URL = "/web";
+    private static final String SUCCESSFUL_UPLOAD_MESSAGE = "fileUploadSuccessful";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,11 +39,11 @@ public class FileUploaderServlet extends HttpServlet {
             for(Part part : req.getParts()) {
                 if (part.getSubmittedFileName() != null) {
                     part.write(uploadFilePath + File.separator + part.getSubmittedFileName());
-                    req.setAttribute("filePath",
+                    req.setAttribute(FILE_PASS_ATTRIBUTE,
                             File.separator + UPLOAD_DIR + File.separator + part.getSubmittedFileName());
-                    System.out.println(File.separator + UPLOAD_DIR + File.separator + part.getSubmittedFileName());
-                    req.setAttribute("result", part.getSubmittedFileName() + " upload successfully");
-                    req.getRequestDispatcher("/web").forward(req, resp);
+                    req.setAttribute(RESULT_ATTRIBUTE, part.getSubmittedFileName() +
+                            MessageManager.EN.getMessage(SUCCESSFUL_UPLOAD_MESSAGE));
+                    req.getRequestDispatcher(ALIENS_SERVLET_URL).forward(req, resp);
                 }
             }
         } catch (IOException e) {

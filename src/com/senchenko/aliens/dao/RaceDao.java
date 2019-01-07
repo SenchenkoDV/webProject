@@ -24,8 +24,8 @@ public class RaceDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Race race = new Race(
-                        resultSet.getInt("id_race"),
-                        resultSet.getString("race")
+                        resultSet.getInt(SqlQueries.ID_RACE),
+                        resultSet.getString(SqlQueries.RACE)
                 );
                 races.add(race);
             }
@@ -47,8 +47,8 @@ public class RaceDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 race = new  Race(
-                        resultSet.getInt("id_race"),
-                        resultSet.getString("race")
+                        resultSet.getInt(SqlQueries.ID_RACE),
+                        resultSet.getString(SqlQueries.RACE)
                 );
             }
         } catch (SQLException e) {
@@ -68,8 +68,8 @@ public class RaceDao extends AliensDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 race = new  Race(
-                        resultSet.getInt("id_race"),
-                        resultSet.getString("race")
+                        resultSet.getInt(SqlQueries.ID_RACE),
+                        resultSet.getString(SqlQueries.RACE)
                 );
             }
         } catch (SQLException e) {

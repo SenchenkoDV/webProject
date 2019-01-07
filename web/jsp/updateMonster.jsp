@@ -17,7 +17,7 @@
     <article class="content">
         <form enctype="multipart/form-data" class="login-form" method="POST" action="../upload">
             <input type="hidden" name="command" value="update-monster"/>
-            <input type="hidden" name="monster-id" value="${monster.monsterId}"/>
+            <input type="hidden" name="monsterId" value="${monster.monsterId}"/>
             <p class="login-text">Picture:</p>
             <input name="content" type="file" required>
             <p class="login-text">Monster name:</p>
