@@ -11,14 +11,11 @@ import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 import com.senchenko.aliens.util.UserRatingAction;
 import com.senchenko.aliens.validation.CommentValidator;
-import com.senchenko.aliens.validation.CommonValidator;
-
+import com.senchenko.aliens.validation.UserValidation;
 import java.sql.Date;
 
 public class CommentService {
     private static final int DEFAULT_ID = 0;
-    private static final int ADMIN_ROLE = 1;
-    private static final int USER_ROLE = 2;
     private static final String MONSTER_ATTRIBUTE = "monster";
     private static final String USER_ATTRIBUTE = "user";
     private static final String RESULT_ATTRIBUTE = "result";
@@ -30,13 +27,12 @@ public class CommentService {
     private static final String INVALID_DATA_MESSAGE = "invalidData";
 
     public CommandResult addComment(RequestContent content){
-        CommandResult commandResult = null;
+        CommandResult commandResult;
         String mark = content.getRequestParameters().get(STAR_PARAMETER)[0];
         String comment = content.getRequestParameters().get(COMMENT_PARAMETER)[0];
         if (CommentValidator.addCommentValidator(mark, comment)){
-            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-            if (( userRole != null) && ((((User)userRole).getRole().getRoleId() == ADMIN_ROLE) ||
-                    (((User)userRole).getRole().getRoleId() == USER_ROLE))){
+            Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (UserValidation.hasRoleAdminOrUser(account)){
                 CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
                 UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
                 Comment currentComment = new Comment(DEFAULT_ID,

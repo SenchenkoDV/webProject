@@ -15,7 +15,6 @@ import java.util.List;
 public class UserService {
     private static final int DEFAULT_ID = 0;
     private static final int DEFAULT_USER_RATING = 0;
-    private static final int ADMIN_ROLE = 1;
     private static final String DEFAULT_ROLE = "user";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "successfulCreateMonster";
     private static final String USER_ATTRIBUTE = "user";
@@ -46,7 +45,7 @@ public class UserService {
     }
 
     public CommandResult login(RequestContent content){
-        CommandResult commandResult = null;
+        CommandResult commandResult;
         String enterLogin = content.getRequestParameters().get(LOGIN_PARAMETER)[0];
         String enterPass = content.getRequestParameters().get(PASSWORD_PARAMETER)[0];
         if (UserValidation.loginValidator(enterLogin, enterPass)){
@@ -82,7 +81,7 @@ public class UserService {
     }
 
     public CommandResult registration(RequestContent content){
-        CommandResult commandResult = null;
+        CommandResult commandResult;
         String enterLogin = content.getRequestParameters().get(LOGIN_PARAMETER)[0];
         String enterPass = content.getRequestParameters().get(PASSWORD_PARAMETER)[0];
         String enterEmail = content.getRequestParameters().get(EMAIL_PARAMETER)[0];
@@ -116,12 +115,12 @@ public class UserService {
     }
 
     public CommandResult changeRole(RequestContent content){
-        CommandResult commandResult = null;
+        CommandResult commandResult;
         String userId = content.getRequestParameters().get(USER_ID_PARAMETER)[0];
         String newRoleId = content.getRequestParameters().get(ROLE_PARAMETER)[0];
         if (UserValidation.changeRoleValidator(userId, newRoleId)){
-            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-            if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
+            Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (UserValidation.hasRoleAdmin(account)){
                 TransactionExecutor transactionExecutor = new TransactionExecutor();
                 UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
                 transactionExecutor.beginTransaction(userDao);
@@ -148,10 +147,10 @@ public class UserService {
     }
 
     public CommandResult displayAllUsers(RequestContent content){
-        CommandResult commandResult = null;
-        Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-        if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
-            List<User> userList = null;
+        CommandResult commandResult;
+        Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
+        if (UserValidation.hasRoleAdmin(account)){
+            List<User> userList;
             UserDao userDao = SingletonDaoProvider.INSTANCE.getUserDao();
             TransactionExecutor transactionExecutor = new TransactionExecutor();
             transactionExecutor.beginTransaction(userDao);
