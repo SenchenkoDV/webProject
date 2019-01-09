@@ -6,4 +6,7 @@
     <error-page>
         <location>/jsp/error/commonError.jsp</location>
     </error-page>
+    <listener>
+        <listener-class>com.senchenko.aliens.listener.Listener</listener-class>
+    </listener>
 </web-app>

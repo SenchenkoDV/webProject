@@ -9,6 +9,7 @@ import com.senchenko.aliens.entity.Race;
 import com.senchenko.aliens.entity.User;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
+import com.senchenko.aliens.validation.MonsterValidation;
 import java.util.List;
 
 public class MonsterService {
@@ -34,6 +35,7 @@ public class MonsterService {
     private static final String RACE_PARAMETER = "race";
     private static final String SUCCESSFUL_CREATE_MONSTER_MESSAGE = "successfulCreateMonster";
     private static final String SUCCESSFUL_UPDATE_MONSTER_MESSAGE = "successfulUpdateMonster";
+    private static final String INVALID_DATA_MESSAGE = "invalidData";
 
     public CommandResult showMonstersPage(RequestContent content){
         CommandResult commandResult = null;
@@ -49,45 +51,59 @@ public class MonsterService {
         return commandResult;
     }
 
-    public CommandResult getMonster(RequestContent content){
+    public CommandResult showMonster(RequestContent content){
         CommandResult commandResult = null;
         Monster currentMonster = null;
         List<Comment> comments = null;
-        int monsterId = Integer.parseInt(content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0]);
-        MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-        CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
-        TransactionExecutor transactionExecutor = new TransactionExecutor();
-        transactionExecutor.beginTransaction(monsterDao, commentDao);
-        currentMonster = (Monster) monsterDao.findById(monsterId);
-        comments = commentDao.findAllByMonsterId(monsterId);
-        transactionExecutor.commit();
-        transactionExecutor.endTransaction();
-        content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
-        content.getSessionAttributes().put(COMMENTS_ATTRIBUTE, comments);
-        commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
-                PageManager.getProperty(MONSTER_PAGE_PROPERTY));
+        String monsterId = content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0];
+        if (MonsterValidation.showMonsterValidator(monsterId)){
+            MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+            CommentDao commentDao = SingletonDaoProvider.INSTANCE.getCommentDao();
+            TransactionExecutor transactionExecutor = new TransactionExecutor();
+            transactionExecutor.beginTransaction(monsterDao, commentDao);
+            currentMonster = (Monster) monsterDao.findById(Integer.parseInt(monsterId));
+            comments = commentDao.findAllByMonsterId(Integer.parseInt(monsterId));
+            transactionExecutor.commit();
+            transactionExecutor.endTransaction();
+            content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
+            content.getSessionAttributes().put(COMMENTS_ATTRIBUTE, comments);
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                    PageManager.getProperty(MONSTER_PAGE_PROPERTY));
+        }else {
+            content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                    PageManager.getProperty(ERROR_PAGE_PROPERTY));
+        }
         return commandResult;
     }
 
     public CommandResult changeMonsterDescription(RequestContent content){
         CommandResult commandResult = null;
-        Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-        if (( userRole != null) && ((((User)userRole).getRole().getRoleId() == ADMIN_ROLE) ||
-                (((User)userRole).getRole().getRoleId() == USER_ROLE))){
-            String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
-            Monster currentMonster = (Monster) content.getSessionAttributes().get(MONSTER_ATTRIBUTE);
-            currentMonster.setDescription(changedMonsterDescription);
-            MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-            TransactionExecutor transactionExecutor = new TransactionExecutor();
-            transactionExecutor.beginTransaction(monsterDao);
-            monsterDao.update(currentMonster);
-            transactionExecutor.commit();
-            transactionExecutor.endTransaction();
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
-                    PageManager.getProperty(MONSTER_PAGE_PROPERTY));
+        String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        if (MonsterValidation.changeMonsterDescriptionValidator(changedMonsterDescription)){
+            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (( userRole != null) && ((((User)userRole).getRole().getRoleId() == ADMIN_ROLE) ||
+                    (((User)userRole).getRole().getRoleId() == USER_ROLE))){
+                Monster currentMonster = (Monster) content.getSessionAttributes().get(MONSTER_ATTRIBUTE);
+                currentMonster.setDescription(changedMonsterDescription);
+                MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+                TransactionExecutor transactionExecutor = new TransactionExecutor();
+                transactionExecutor.beginTransaction(monsterDao);
+                monsterDao.update(currentMonster);
+                transactionExecutor.commit();
+                transactionExecutor.endTransaction();
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(MONSTER_PAGE_PROPERTY));
+            }else {
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(ERROR_PAGE_PROPERTY));
+            }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -111,34 +127,41 @@ public class MonsterService {
 
     public CommandResult addMonster(RequestContent content){
         CommandResult commandResult = null;
-        Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-        if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
-            String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
-            String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
-            String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
-            String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
-            TransactionExecutor transactionExecutor = new TransactionExecutor();
-            RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
-            transactionExecutor.beginTransaction(raceDao);
-            Race race = (Race) raceDao.findByRace(raceName);
-            transactionExecutor.commit();
-            transactionExecutor.endTransaction();
-            if (race == null){
-                raceDao.create(new Race(DEFAULT_ID, raceName));
+        String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
+        String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
+        String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        if (MonsterValidation.addMonsterValidator(name, raceName, description)){
+            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
+                String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
+                TransactionExecutor transactionExecutor = new TransactionExecutor();
+                RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
+                transactionExecutor.beginTransaction(raceDao);
+                Race race = (Race) raceDao.findByRace(raceName);
                 transactionExecutor.commit();
+                transactionExecutor.endTransaction();
+                if (race == null){
+                    raceDao.create(new Race(DEFAULT_ID, raceName));
+                    transactionExecutor.commit();
+                }
+                MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+                transactionExecutor.beginTransaction(monsterDao);
+                monsterDao.create(new Monster(DEFAULT_ID, name, race, description,
+                        DEFAULT_AVERAGE_RATING, picturePath));
+                transactionExecutor.commit();
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
+                commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
+                        PageManager.getProperty(ADD_MONSTER_PROPERTY));
+            }else {
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
-            MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-            transactionExecutor.beginTransaction(monsterDao);
-            monsterDao.create(new Monster(DEFAULT_ID, name, race, description,
-                    DEFAULT_AVERAGE_RATING, picturePath));
-            transactionExecutor.commit();
-            content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
-            commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
-                    PageManager.getProperty(ADD_MONSTER_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -147,19 +170,28 @@ public class MonsterService {
 
     public CommandResult showUpdateMonsterPage(RequestContent content) {
         CommandResult commandResult = null;
-        Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-        if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
-            MonsterDao monsterDao = new MonsterDao();
-            TransactionExecutor transactionExecutor = new TransactionExecutor();
-            transactionExecutor.beginTransaction(monsterDao);
-            Monster currentMonster = (Monster) monsterDao.findByName(content.getRequestParameters().get(NAME_PARAMETER)[0]);
-            content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
-            transactionExecutor.commit();
-            transactionExecutor.endTransaction();
-            commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
+        String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
+        if (MonsterValidation.showUpdateMonsterPageValidator(name)){
+            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
+                MonsterDao monsterDao = new MonsterDao();
+                TransactionExecutor transactionExecutor = new TransactionExecutor();
+                transactionExecutor.beginTransaction(monsterDao);
+                Monster currentMonster = (Monster) monsterDao.findByName(name);
+                content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
+                transactionExecutor.commit();
+                transactionExecutor.endTransaction();
+                commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
+                        PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
+            }else {
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(ERROR_PAGE_PROPERTY));
+            }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -168,32 +200,42 @@ public class MonsterService {
 
     public CommandResult updateMonster(RequestContent content){
         CommandResult commandResult = null;
-        Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
-        if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
-            int updatedMonsterId = Integer.parseInt(content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0]);
-            String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
-            String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
-            String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
-            String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
-            TransactionExecutor transactionExecutor = new TransactionExecutor();
-            RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
-            transactionExecutor.beginTransaction(raceDao);
-            Race race = (Race) raceDao.findByRace(raceName);
-            transactionExecutor.commit();
-            if (race == null){
-                raceDao.create(new Race(DEFAULT_ID, raceName));
+        String updatedMonsterId = content.getRequestParameters().get(MONSTERS_ID_PARAMETER)[0];
+        String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
+        String raceName = content.getRequestParameters().get(RACE_PARAMETER)[0];
+        String description = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        if (MonsterValidation.updateMonsterValidator(updatedMonsterId, name, raceName, description)){
+            Object userRole = content.getSessionAttributes().get(USER_ATTRIBUTE);
+            if (( userRole != null) && (((User)userRole).getRole().getRoleId() == ADMIN_ROLE)){
+                String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
+                TransactionExecutor transactionExecutor = new TransactionExecutor();
+                RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
+                transactionExecutor.beginTransaction(raceDao);
+                Race race = (Race) raceDao.findByRace(raceName);
                 transactionExecutor.commit();
+                if (race == null){
+                    raceDao.create(new Race(DEFAULT_ID, raceName));
+                    transactionExecutor.commit();
+                }
+                MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+                transactionExecutor.beginTransaction(monsterDao);
+                monsterDao.update(new Monster(Integer.parseInt(updatedMonsterId),
+                        name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
+                transactionExecutor.commit();
+                transactionExecutor.endTransaction();
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
+            }else {
+                content.getSessionAttributes().put(RESULT_ATTRIBUTE,
+                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
-            MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-            transactionExecutor.beginTransaction(monsterDao);
-            monsterDao.update(new Monster(updatedMonsterId, name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
-            transactionExecutor.commit();
-            transactionExecutor.endTransaction();
-            content.getSessionAttributes().put(RESULT_ATTRIBUTE, MessageManager.EN.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
-            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }

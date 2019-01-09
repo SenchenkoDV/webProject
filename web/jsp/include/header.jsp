@@ -13,9 +13,8 @@
     </c:if>
     <c:choose>
         <c:when test="${user==null}"><a href="/../web?command=login-page" class="header-button">LOG IN</a></c:when>
-        <c:otherwise><a href="../web?command=logout" class="header-button">LOGOUT</a></c:otherwise>
+        <c:otherwise><a href="../web?command=logout" class="header-button">LOGOUT<output class="user-head">(${user.login})</output></a></c:otherwise>
     </c:choose>
-    <div class="user">${user.login}</div>
 </header>
 </body>
 </html>

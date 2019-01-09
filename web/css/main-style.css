@@ -77,8 +77,9 @@ html {
     color: white;
 }
 
-.user{
+.user-head{
     color: blue;
     font-size: 17px;
+    font-weight: bold;
 }
 

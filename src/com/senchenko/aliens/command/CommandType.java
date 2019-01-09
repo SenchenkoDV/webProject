@@ -14,7 +14,7 @@ public enum CommandType {
     CHANGE_RATING(new UserService()::changeRole),
     DISPLAY_USERS(new UserService()::displayAllUsers),
     MONSTERS(new MonsterService()::showMonstersPage),
-    MONSTER(new MonsterService()::getMonster),
+    MONSTER(new MonsterService()::showMonster),
     CHANGE_MONSTER_DESCRIPTION(new MonsterService()::changeMonsterDescription),
     ADD_MONSTER_PAGE(new MonsterService()::addMonsterPage),
     ADD_MONSTER(new MonsterService()::addMonster),
