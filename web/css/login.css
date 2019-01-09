@@ -1,0 +1,42 @@
+.login-form{
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 400px;
+    width: 350px;
+    border-radius: 10px;
+    padding: 20px 60px;
+}
+
+.login-text{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.password-text{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.email-text{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.submit-button{
+    align-self: center;
+    margin: 20px;
+    border-radius: 10px;
+    font-size: 25px;
+    height: 70px;
+    width: 150px;
+}
+
+.input-field{
+    height: 50px;
+    font-size: 20px;
+}
+
+.registration{
+    margin: 5px;
+}

@@ -51,6 +51,7 @@ public class UserService {
         transactionExecutor.beginTransaction(userDao);
         User currentUser = (User) userDao.findUserByLogin(enterLogin[0]);
         transactionExecutor.commit();
+        transactionExecutor.endTransaction();
         if (enterLogin == null || enterPass == null || currentUser == null || (currentUser.getLogin().equals(enterLogin) &&
                 currentUser.getPassword().equals(enterPass))){
             content.getRequestAttributes().put(ERROR_LOGIN_PASS_ATTRIBUTE, MessageManager.EN.getMessage(LOGIN_ERROR_MESSAGE));
@@ -78,7 +79,6 @@ public class UserService {
         transactionExecutor.beginTransaction(userDao);
         User createdUser = (User) userDao.findUserByLogin(enterLogin[0]);
         transactionExecutor.commit();
-
         if (createdUser == null) {
             createdUser = new User(DEFAULT_ID, new Role(DEFAULT_ID, DEFAULT_ROLE), DEFAULT_USER_RATING,
                     enterLogin[0], enterPass[0], enterEmail[0]);
@@ -91,6 +91,7 @@ public class UserService {
                     MessageManager.EN.getMessage(CREATE_USER_ERROR_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(LOGIN_PROPERTY));
         }
+        transactionExecutor.endTransaction();
         return commandResult;
     }
 
@@ -110,6 +111,7 @@ public class UserService {
             currentUser.setRole(new Role(newRoleId, DEFAULT_ROLE));
             userDao.update(currentUser);
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             commandResult = displayAllUsers(content);
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
@@ -130,6 +132,7 @@ public class UserService {
             transactionExecutor.beginTransaction(userDao);
             userList = userDao.findAll();
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             content.getSessionAttributes().put(USERS_ATTRIBUTE, userList);
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(USERS_PROPERTY));
         }else {

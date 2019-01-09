@@ -4,7 +4,8 @@
 <html>
 <head>
     <style>
-        <%@include file="../css/login-style.css"%>
+        <%@include file="/css/main-style.css"%>
+        <%@include file="/css/login.css"%>
     </style>
     <meta charset="UTF-8">
     <title>Monsters</title>

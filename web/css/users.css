@@ -1,13 +1,27 @@
 .users{
     display: flex;
     background: white;
-    border:2px #060d1b solid;
     margin: 40px 60px;
     padding: 10px;
+    border-radius: 10px;
 }
 
-.table-head>th{
-    display: flex;
-    margin: 10px;
+.input-field{
+    flex-direction: row;
+    font-size: 17px;
+    padding: 5px;
+}
+
+.head-text{
     font-size: 20px;
+}
+
+.submit-button{
+    margin: 7px;
+    padding: 2px;
+    height: 50px;
+    width: 70px;
+    border-radius: 10px;
+    background: #afdf90;
+    font-size: 16px;
 }

@@ -4,8 +4,8 @@
 <html>
 <head>
     <style>
-        <%@include file="../css/login-style.css"%>
-        <%@include file="../css/users.css"%>
+        <%@include file="/css/main-style.css"%>
+        <%@include file="/css/users.css"%>
     </style>
     <meta charset="UTF-8">
     <title>Monsters</title>
@@ -17,24 +17,24 @@
     <article class="content">
     <table class="users">
         <tr>
-            <th>login</th>
-            <th>email</th>
-            <th>rating</th>
-            <th>role</th>
+            <th class="head-text">login</th>
+            <th class="head-text">email</th>
+            <th class="head-text">rating</th>
+            <th class="head-text">role</th>
         </tr>
         <c:forEach var="user" items="${users}">
             <form name="userForm" class="user-form" method="POST" action="../web">
                 <input type="hidden" name="command" value="change-rating"/>
                 <input type="hidden" name="userId" value="${user.userId}"/>
                 <tr>
-                    <th><p>${user.login}</p>
-                    <th><p>${user.email}</p>
-                    <th><p>${user.rating}</p>
+                    <th><p class="input-field">${user.login}</p>
+                    <th><p class="input-field">${user.email}</p>
+                    <th><p class="input-field">${user.rating}</p>
                     <th><select type="text" class="input-field" name="role">
                         <option hidden selected="selected">${user.role.role}</option>
-                        <option value="1">admin</option>
-                        <option value="2">user</option>
-                        <option value="3">banned</option>
+                        <option class="input-field" value="1">admin</option>
+                        <option class="input-field" value="2">user</option>
+                        <option class="input-field" value="3">banned</option>
                     </select></th>
                     <th><input type="submit" class="submit-button" value="Update"/></th>
                 </tr>

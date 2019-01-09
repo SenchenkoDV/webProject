@@ -4,7 +4,8 @@
 <html>
 <head>
     <style>
-        <%@include file="../css/login-style.css"%>
+        <%@include file="/css/monster-edit.css"%>
+        <%@include file="/css/main-style.css"%>
     </style>
     <meta charset="UTF-8">
     <title>Monsters</title>
@@ -15,16 +16,16 @@
 <div class="main-wrap">
     <c:import url="include/header.jsp" charEncoding="utf-8"/>
     <article class="content">
-        <form enctype="multipart/form-data" class="login-form" method="POST" action="../upload">
+        <form enctype="multipart/form-data" class="monster-form" method="POST" action="../upload">
             <input type="hidden" name="command" value="add-monster"/>
-            <p class="login-text">Picture:</p>
-            <input name="content" type="file" required>
-            <p class="login-text">Monster name:</p>
+            <p class="picture">Picture:</p>
+            <input name="content" class="input-field" type="file" required>
+            <p class="monster-name">Monster name:</p>
             <input type="text" class="input-field" name="name" value=""/>
-            <p class="password-text">Race:</p>
-            <input type="password" class="input-field" name="race" value=""/>
-            <p class="password-text">Description:</p>
-            <textarea name="description"></textarea>
+            <p class="monster-race">Race:</p>
+            <input type="text" class="input-field" name="race" value=""/>
+            <p class="monster-description">Description:</p>
+            <textarea name="description" class="text-area"></textarea>
             <output>${result}</output>
             <input type="submit" class="submit-button" value="Create"/>
         </form>

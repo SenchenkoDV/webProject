@@ -1,0 +1,58 @@
+.monster-form{
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    width: 900px;
+}
+
+.picture{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.monster-name{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.monster-race{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.monster-description{
+    font-size: 20px;
+    margin: 5px;
+}
+
+.input-field{
+    font-size: 18px;
+    padding: 2px;
+}
+
+.text-area{
+    flex-grow: initial;
+    height: inherit;
+    width: inherit;
+    background: white;
+    resize: none;
+    position: relative;
+    margin: 10px;
+    padding: 2px;
+    font-size: 20px;
+    color: black;
+    min-height: 300px;
+    width: 850px;
+}
+
+.submit-button{
+    width: 150px;
+    height: 50px;
+    align-self: center;
+    border-radius: 10px;
+    background: #afdf90;
+    font-size: 25px;
+}

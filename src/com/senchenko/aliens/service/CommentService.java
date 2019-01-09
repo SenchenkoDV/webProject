@@ -49,6 +49,7 @@ public class CommentService {
                 commentDao.create(currentComment);
                 userDao.update(currentComment.getUser());
                 transactionExecutor.commit();
+                transactionExecutor.endTransaction();
                 commandResult = new MonsterService().getMonster(content);
             }else {
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,

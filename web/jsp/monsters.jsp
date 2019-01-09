@@ -5,7 +5,8 @@
 <html>
 <head>
     <style>
-        <%@include file="../css/monster-style.css"%>
+        <%@include file="/css/main-style.css"%>
+        <%@include file="/css/monsters.css"%>
     </style>
     <meta charset="UTF-8">
     <title>Monsters</title>
@@ -29,7 +30,9 @@
                             <p class="average-rating">Average rating: <fmt:formatNumber value="${monster.averageRating}" maxFractionDigits="2"/></p>
                         </div>
                     </a>
-                    <a class="edit-monster" href="../web?command=update-monster-page&name=${monster.name}">Edit</a>
+                    <c:if test="${user.role.roleId==1}">
+                        <a class="edit-monster" href="../web?command=update-monster-page&name=${monster.name}">Edit</a>
+                    </c:if>
                 </div>
         </c:forEach>
         </div>

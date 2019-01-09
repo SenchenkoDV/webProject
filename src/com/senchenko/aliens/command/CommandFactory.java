@@ -4,14 +4,24 @@ import com.senchenko.aliens.content.RequestContent;
 
 public enum  CommandFactory {
     INSTANCE;
-    private final static String DASH = "-";
-    private final static String UNDERSCORE = "_";
-    private final static String COMMAND = "command";
+    private static final String DASH = "-";
+    private static final String UNDERSCORE = "_";
+    private static final String COMMAND = "command";
+    private static final String DEFAULT_COMMAND = "WRONG_COMMAND";
+    private Command command;
 
     public Command getCommand(RequestContent content){
-        String name = content.getRequestParameters().get(COMMAND)[0].replaceAll(DASH, UNDERSCORE).trim();
-        System.out.println(name);
-        CommandType type = CommandType.valueOf(name.toUpperCase());
-        return type.getCommand();
+        String name = content.getRequestParameters().get(COMMAND)[0];
+        if (name == null || name.isEmpty()) {
+            command = CommandType.valueOf(DEFAULT_COMMAND).getCommand();
+        }
+        try {
+            name = name.replaceAll(DASH, UNDERSCORE).trim();
+            CommandType type = CommandType.valueOf(name.toUpperCase());
+            command = type.getCommand();
+        }catch (IllegalArgumentException e){
+            command = CommandType.valueOf(DEFAULT_COMMAND).getCommand();
+        }
+        return command;
     }
 }

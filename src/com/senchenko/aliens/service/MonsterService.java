@@ -42,6 +42,7 @@ public class MonsterService {
         transactionExecutor.beginTransaction(monsterDao);
         List<Monster> monsters = monsterDao.findAll();
         transactionExecutor.commit();
+        transactionExecutor.endTransaction();
         content.getSessionAttributes().put(MONSTERS_ATTRIBUTE, monsters);
         commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(MONSTERS_PROPERTY));
@@ -60,6 +61,7 @@ public class MonsterService {
         currentMonster = (Monster) monsterDao.findById(monsterId);
         comments = commentDao.findAllByMonsterId(monsterId);
         transactionExecutor.commit();
+        transactionExecutor.endTransaction();
         content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
         content.getSessionAttributes().put(COMMENTS_ATTRIBUTE, comments);
         commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
@@ -80,6 +82,7 @@ public class MonsterService {
             transactionExecutor.beginTransaction(monsterDao);
             monsterDao.update(currentMonster);
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(MONSTER_PAGE_PROPERTY));
         }else {
@@ -119,6 +122,7 @@ public class MonsterService {
             transactionExecutor.beginTransaction(raceDao);
             Race race = (Race) raceDao.findByRace(raceName);
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             if (race == null){
                 raceDao.create(new Race(DEFAULT_ID, raceName));
                 transactionExecutor.commit();
@@ -151,6 +155,7 @@ public class MonsterService {
             Monster currentMonster = (Monster) monsterDao.findByName(content.getRequestParameters().get(NAME_PARAMETER)[0]);
             content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
@@ -183,6 +188,7 @@ public class MonsterService {
             transactionExecutor.beginTransaction(monsterDao);
             monsterDao.update(new Monster(updatedMonsterId, name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
             transactionExecutor.commit();
+            transactionExecutor.endTransaction();
             content.getSessionAttributes().put(RESULT_ATTRIBUTE, MessageManager.EN.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD, PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
         }else {

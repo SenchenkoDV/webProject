@@ -15,7 +15,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/web")
 public class AliensServlet extends HttpServlet {
     private static final String ERROR_PAGE_ATTRIBUTE = "nullPage";
-    private static final String ERROR_PAGE_MESSAGE = "nullpage";
+    private static final String ERROR_PAGE_MESSAGE = "nullPage";
     private static final String INDEX_PAGE = "index";
 
     @Override

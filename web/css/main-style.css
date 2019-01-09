@@ -16,7 +16,7 @@ html {
     overflow: auto;
     min-height: auto;
     min-width: auto;
-    background: url("../images/background.jpg") no-repeat fixed 95% 0px;
+    background: url("/images/background.jpg") no-repeat fixed 95% 0px;
 }
 
 .main-wrap {
@@ -26,6 +26,7 @@ html {
     margin-bottom: 10px;
     opacity: 0.97;
     overflow: visible;
+    width: 925px;
 }
 
 .header{
@@ -51,11 +52,14 @@ html {
 }
 
 .content{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: visible;
     flex-direction: column;
     background: black;
     order: 2;
+    min-height: 600px;
 }
 
 .footer{
@@ -71,5 +75,10 @@ html {
 .footer-description{
     display: flex;
     color: white;
+}
+
+.user{
+    color: blue;
+    font-size: 17px;
 }
 

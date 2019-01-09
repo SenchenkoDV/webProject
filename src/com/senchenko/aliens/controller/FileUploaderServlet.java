@@ -48,6 +48,7 @@ public class FileUploaderServlet extends HttpServlet {
             }
         } catch (IOException e) {
             logger.log(Level.ERROR, "Error in I/O", e);
+            resp.sendRedirect(ALIENS_SERVLET_URL);
         }
     }
 }
