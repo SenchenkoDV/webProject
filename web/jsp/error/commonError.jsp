@@ -17,6 +17,7 @@
     <article class="content">
         <div class="error-wrapper">
             ${pageContext.errorData.statusCode}
+            ${result}
         </div>
     </article>
     <c:import url="../include/footer.jsp" charEncoding="utf-8"/>

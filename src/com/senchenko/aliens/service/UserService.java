@@ -21,6 +21,7 @@ public class UserService {
     private static final String RESULT_ATTRIBUTE = "result";
     private static final String USERS_ATTRIBUTE = "users";
     private static final String NOT_ENOUGH_RIGHTS_ATTRIBUTE = "notEnoughRights";
+    private static final String PASSWORD_REQUIREMENTS_ATTRIBUTE = "requirements";
     private static final String LOGIN_PROPERTY = "login";
     private static final String REGISTRATION_PROPERTY = "registration";
     private static final String USERS_PROPERTY = "users";
@@ -33,6 +34,7 @@ public class UserService {
     private static final String LOGIN_ERROR_MESSAGE = "loginError";
     private static final String CREATE_USER_ERROR_MESSAGE = "createUserError";
     private static final String INVALID_DATA_MESSAGE = "invalidData";
+    private static final String PASSWORD_REQUIREMENTS_MESSAGE  = "passwordRequirements";
 
     public CommandResult showLoginPage(RequestContent content){
         return new CommandResult(CommandResult.ResponseType.REDIRECT,
@@ -40,7 +42,9 @@ public class UserService {
     }
 
     public CommandResult showRegistrationPage(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.REDIRECT,
+        content.getSessionAttributes().put(PASSWORD_REQUIREMENTS_ATTRIBUTE,
+                MessageManager.EN.getMessage(PASSWORD_REQUIREMENTS_MESSAGE));
+        return new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(REGISTRATION_PROPERTY));
     }
 

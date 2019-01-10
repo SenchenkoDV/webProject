@@ -64,12 +64,15 @@ html {
 
 .footer{
     display: flex;
-    flex: 0 0 auto;
     justify-content: space-around;
     align-items: center;
     height: 50px;
     background: #060d1b;
     order: 3;
+}
+
+.locale{
+    order: 4;
 }
 
 .footer-description{

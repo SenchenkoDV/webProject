@@ -1,30 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 <html>
 <head>
+    <div class="locale">
+        <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+        <fmt:setLocale value="${language}" scope="session"/>
+        <fmt:setBundle basename="property.messages" var="rb" />
+    </div>
     <style>
         <%@include file="/css/main-style.css"%>
         <%@include file="/css/monster-page.css"%>
     </style>
     <meta charset="UTF-8">
-    <title>Monsters</title>
+    <title><fmt:message key="title" bundle="${rb}"/></title>
     <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
     <script>
         function disable() {
             document.getElementById("name").disabled = true;
         }
-
         function enable() {
             document.getElementById("area-id").disabled = false;
             document.getElementById("save-id").hidden = false;
             document.getElementById("edit-id").hidden = true;
         }
     </script>
-
-
 </head>
 <body>
 
@@ -39,8 +41,8 @@
                     </div>
                     <div class="image_description">
                         <p class="monster-name">${monster.name}</p>
-                        <p class="monster-race">Race: ${monster.race.race}</p>
-                        <p class="average-rating">Average rating: <fmt:formatNumber value="${monster.averageRating}"
+                        <p class="monster-race"><fmt:message key="page.monster.race" bundle="${rb}"/> ${monster.race.race}</p>
+                        <p class="average-rating"><fmt:message key="page.monster.averageRating" bundle="${rb}"/> <fmt:formatNumber value="${monster.averageRating}"
                                                                                     maxFractionDigits="2"/></p>
                     </div>
                     <div class="short-description-wrapper">
@@ -50,18 +52,16 @@
             </div>
             <div class="text-description">
                 <c:if test="${user.role.roleId==1||user.role.roleId==2}">
-                    <button class="edit-button" id="edit-id" onclick="enable()">Edit</button>
+                    <button class="edit-button" id="edit-id" onclick="enable()"><fmt:message key="page.monster.editButton" bundle="${rb}"/></button>
                 </c:if>
                 <form action="../web" class="description-form" id="registration-form">
                     <input type="hidden" name="command" value="change-monster-description"/>
                     <textarea class="text-area" disabled id="area-id" name="description">
                         ${monster.description}
                     </textarea>
-                    <button type="submit" hidden class="save-button" id="save-id" onclick="disable()">Save</button>
+                    <button type="submit" hidden class="save-button" id="save-id" onclick="disable()"><fmt:message key="page.monster.saveButton" bundle="${rb}"/></button>
                 </form>
             </div>
-
-
         </div>
         <div class="comments">
             <div class="comments-wrapper">
@@ -93,7 +93,7 @@
                             </div>
                             <input type="hidden" name="monsterId" value="${monster.monsterId}">
                             <input type="hidden" name="command" value="add-comment"/>
-                            <input type="submit" class="send-button" value="Send"/>
+                            <input type="submit" class="send-button" value="<fmt:message key="page.monster.sendButton" bundle="${rb}"/>"/>
                         </form>
                     </div>
                 </c:if>
@@ -115,6 +115,5 @@
     </article>
     <c:import url="include/footer.jsp" charEncoding="utf-8"/>
 </div>
-
 </body>
 </html>

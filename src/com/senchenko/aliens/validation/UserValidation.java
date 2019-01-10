@@ -34,4 +34,8 @@ public class UserValidation {
         return ( role != null) && ((((User)role).getRole().getRoleId() == ADMIN_ROLE) ||
                 (((User)role).getRole().getRoleId() == USER_ROLE));
     }
+
+    public static void main(String[] args) {
+        System.out.println(Pattern.matches(USER_PASS, "vxjydh1C"));
+    }
 }

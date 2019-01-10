@@ -44,6 +44,9 @@ public class RequestContent {
         for (Map.Entry<String, Object> attribute : sessionAttributes.entrySet()) {
             request.getSession().setAttribute(attribute.getKey(), attribute.getValue());
         }
+        for (Map.Entry<String, Object> attribute : requestAttributes.entrySet()) {
+            request.setAttribute(attribute.getKey(), attribute.getValue());
+        }
         for (Map.Entry<String, String[]> attribute : requestParameters.entrySet()) {
             request.getSession().setAttribute(attribute.getKey(), attribute.getValue());
         }

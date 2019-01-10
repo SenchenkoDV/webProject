@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
 
 @WebListener()
-public class Listener implements ServletContextListener,
+public class AttributeListener implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
     private static final Logger LOGGER = LogManager.getLogger();
 
