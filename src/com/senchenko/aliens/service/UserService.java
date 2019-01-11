@@ -1,7 +1,7 @@
 package com.senchenko.aliens.service;
 
-import com.senchenko.aliens.content.CommandResult;
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.command.CommandResult;
+import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.dao.SingletonDaoProvider;
 import com.senchenko.aliens.dao.TransactionExecutor;
 import com.senchenko.aliens.dao.UserDao;
@@ -12,7 +12,7 @@ import com.senchenko.aliens.manager.PageManager;
 import com.senchenko.aliens.validation.UserValidation;
 import java.util.List;
 
-public class UserService {
+public class UserService implements Userable{
     private static final int DEFAULT_ID = 0;
     private static final int DEFAULT_USER_RATING = 0;
     private static final String DEFAULT_ROLE = "user";
@@ -36,12 +36,12 @@ public class UserService {
     private static final String INVALID_DATA_MESSAGE = "invalidData";
     private static final String PASSWORD_REQUIREMENTS_MESSAGE  = "passwordRequirements";
 
-    public CommandResult showLoginPage(RequestContent content){
+    public CommandResult goToLoginPage(RequestContent content){
         return new CommandResult(CommandResult.ResponseType.REDIRECT,
                 PageManager.getProperty(LOGIN_PROPERTY));
     }
 
-    public CommandResult showRegistrationPage(RequestContent content){
+    public CommandResult goToRegistrationPage(RequestContent content){
         content.getSessionAttributes().put(PASSWORD_REQUIREMENTS_ATTRIBUTE,
                 MessageManager.EN.getMessage(PASSWORD_REQUIREMENTS_MESSAGE));
         return new CommandResult(CommandResult.ResponseType.FORWARD,
@@ -62,7 +62,7 @@ public class UserService {
             if (currentUser != null || (currentUser.getLogin().equals(enterLogin) &&
                     currentUser.getPassword().equals(enterPass))){
                 content.getSessionAttributes().put(USER_ATTRIBUTE, currentUser);
-                commandResult = new MonsterService().showMonstersPage(content);
+                commandResult = new MonsterService().goToMonstersPage(content);
             }
             else {
                 content.getRequestAttributes().put(ERROR_LOGIN_PASS_ATTRIBUTE,
@@ -84,7 +84,7 @@ public class UserService {
                 PageManager.getProperty(LOGIN_PROPERTY));
     }
 
-    public CommandResult registration(RequestContent content){
+    public CommandResult register(RequestContent content){
         CommandResult commandResult;
         String enterLogin = content.getRequestParameters().get(LOGIN_PARAMETER)[0];
         String enterPass = content.getRequestParameters().get(PASSWORD_PARAMETER)[0];
@@ -134,7 +134,7 @@ public class UserService {
                 userDao.update(currentUser);
                 transactionExecutor.commit();
                 transactionExecutor.endTransaction();
-                commandResult = displayAllUsers(content);
+                commandResult = goToUsersPage(content);
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
@@ -150,7 +150,7 @@ public class UserService {
         return commandResult;
     }
 
-    public CommandResult displayAllUsers(RequestContent content){
+    public CommandResult goToUsersPage(RequestContent content){
         CommandResult commandResult;
         Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
         if (UserValidation.hasRoleAdmin(account)){

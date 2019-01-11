@@ -1,6 +1,6 @@
 package com.senchenko.aliens.command;
 
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.controller.RequestContent;
 
 public enum  CommandFactory {
     INSTANCE;

@@ -3,7 +3,6 @@ package com.senchenko.aliens.dao;
 import com.senchenko.aliens.configuration.ConnectionPool;
 import com.senchenko.aliens.entity.Entity;
 import com.senchenko.aliens.entity.Role;
-import com.senchenko.aliens.util.SqlQueries;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

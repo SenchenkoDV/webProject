@@ -1,7 +1,7 @@
 package com.senchenko.aliens.service;
 
-import com.senchenko.aliens.content.CommandResult;
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.command.CommandResult;
+import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.dao.*;
 import com.senchenko.aliens.entity.Comment;
 import com.senchenko.aliens.entity.Monster;
@@ -12,7 +12,7 @@ import com.senchenko.aliens.validation.MonsterValidation;
 import com.senchenko.aliens.validation.UserValidation;
 import java.util.List;
 
-public class MonsterService {
+public class MonsterService implements Monsterable{
     private static final int DEFAULT_ID = 0;
     private static final Double DEFAULT_AVERAGE_RATING = 0.0;
     private static final String USER_ATTRIBUTE = "user";
@@ -35,7 +35,7 @@ public class MonsterService {
     private static final String SUCCESSFUL_UPDATE_MONSTER_MESSAGE = "successfulUpdateMonster";
     private static final String INVALID_DATA_MESSAGE = "invalidData";
 
-    public CommandResult showMonstersPage(RequestContent content){
+    public CommandResult goToMonstersPage(RequestContent content){
         CommandResult commandResult;
         MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
         TransactionExecutor transactionExecutor = new TransactionExecutor();
@@ -49,7 +49,7 @@ public class MonsterService {
         return commandResult;
     }
 
-    public CommandResult showMonster(RequestContent content){
+    public CommandResult pickMonster(RequestContent content){
         CommandResult commandResult;
         Monster currentMonster;
         List<Comment> comments;
@@ -107,7 +107,7 @@ public class MonsterService {
         return commandResult;
     }
 
-    public CommandResult addMonsterPage(RequestContent content){
+    public CommandResult goToAddMonsterPage(RequestContent content){
         CommandResult commandResult;
         Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
         if (UserValidation.hasRoleAdmin(account)){
@@ -165,7 +165,7 @@ public class MonsterService {
         return commandResult;
     }
 
-    public CommandResult showUpdateMonsterPage(RequestContent content) {
+    public CommandResult goToUpdateMonsterPage(RequestContent content) {
         CommandResult commandResult;
         String name = content.getRequestParameters().get(NAME_PARAMETER)[0];
         if (MonsterValidation.showUpdateMonsterPageValidator(name)){

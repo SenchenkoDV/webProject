@@ -1,8 +1,7 @@
 package com.senchenko.aliens.controller;
 
 import com.senchenko.aliens.command.CommandFactory;
-import com.senchenko.aliens.content.CommandResult;
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.command.CommandResult;
 import com.senchenko.aliens.manager.PageManager;
 import com.senchenko.aliens.manager.MessageManager;
 import javax.servlet.ServletException;

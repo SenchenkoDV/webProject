@@ -4,16 +4,16 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public enum ConnectionPool{
     INSTANCE;
-    private static final String DATABASE_PROPERTY = "property.database";
     private final Logger LOGGER = LogManager.getLogger();
-    private ResourceBundle resource = ResourceBundle.getBundle(DATABASE_PROPERTY);
-    private final int POOL_SIZE = Integer.parseInt(resource.getString("poolSize"));
+    private final int POOL_SIZE = ConnectorDb.getPollSize();
     private ArrayBlockingQueue<ProxyConnection> connectionQueue;
 
     ConnectionPool(){
@@ -69,6 +69,16 @@ public enum ConnectionPool{
             } catch (SQLException e) {
                 LOGGER.log(Level.ERROR, "Error destroy connection ", e);
             }
+        }
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
+            try {
+                DriverManager.deregisterDriver(driver);
+            } catch (SQLException e) {
+                LOGGER.log(Level.INFO, String.format("Error deregister driver %s", driver), e);
+            }
+
         }
     }
 }

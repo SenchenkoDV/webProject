@@ -1,7 +1,7 @@
 package com.senchenko.aliens.service;
 
-import com.senchenko.aliens.content.CommandResult;
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.command.CommandResult;
+import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 

@@ -1,4 +1,4 @@
-package com.senchenko.aliens.content;
+package com.senchenko.aliens.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;

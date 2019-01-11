@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -17,16 +17,7 @@
     <meta charset="UTF-8">
     <title><fmt:message key="title" bundle="${rb}"/></title>
     <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-    <script>
-        function disable() {
-            document.getElementById("name").disabled = true;
-        }
-        function enable() {
-            document.getElementById("area-id").disabled = false;
-            document.getElementById("save-id").hidden = false;
-            document.getElementById("edit-id").hidden = true;
-        }
-    </script>
+    <script><%@include file="/js/ButtonController.js"%></script>
 </head>
 <body>
 

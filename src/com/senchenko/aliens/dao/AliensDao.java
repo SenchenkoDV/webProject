@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public abstract class AliensDao<T extends Entity> implements CrudDao {
     private static final Logger LOGGER = LogManager.getLogger();
-    Connection connection;
+    protected Connection connection;
 
     void closeStatement(Statement statement) {
         try {

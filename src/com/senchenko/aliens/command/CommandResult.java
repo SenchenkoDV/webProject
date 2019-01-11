@@ -1,4 +1,4 @@
-package com.senchenko.aliens.content;
+package com.senchenko.aliens.command;
 
 public class CommandResult {
     public enum ResponseType{

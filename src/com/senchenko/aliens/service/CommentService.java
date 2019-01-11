@@ -1,7 +1,7 @@
 package com.senchenko.aliens.service;
 
-import com.senchenko.aliens.content.CommandResult;
-import com.senchenko.aliens.content.RequestContent;
+import com.senchenko.aliens.command.CommandResult;
+import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.dao.CommentDao;
 import com.senchenko.aliens.dao.SingletonDaoProvider;
 import com.senchenko.aliens.dao.TransactionExecutor;
@@ -9,12 +9,11 @@ import com.senchenko.aliens.dao.UserDao;
 import com.senchenko.aliens.entity.*;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
-import com.senchenko.aliens.util.UserRatingAction;
 import com.senchenko.aliens.validation.CommentValidator;
 import com.senchenko.aliens.validation.UserValidation;
 import java.sql.Date;
 
-public class CommentService {
+public class CommentService implements Commentable{
     private static final int DEFAULT_ID = 0;
     private static final String MONSTER_ATTRIBUTE = "monster";
     private static final String USER_ATTRIBUTE = "user";
@@ -48,7 +47,7 @@ public class CommentService {
                 userDao.update(currentComment.getUser());
                 transactionExecutor.commit();
                 transactionExecutor.endTransaction();
-                commandResult = new MonsterService().showMonster(content);
+                commandResult = new MonsterService().pickMonster(content);
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));

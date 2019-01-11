@@ -1,4 +1,4 @@
-package com.senchenko.aliens.util;
+package com.senchenko.aliens.dao;
 
 public class SqlQueries {
     public static final String ID_COMMENT = "id_comment";

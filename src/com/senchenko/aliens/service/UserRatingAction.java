@@ -1,12 +1,9 @@
-package com.senchenko.aliens.util;
+package com.senchenko.aliens.service;
 
 import com.senchenko.aliens.dao.CommentDao;
 import com.senchenko.aliens.dao.SingletonDaoProvider;
 import com.senchenko.aliens.dao.TransactionExecutor;
 import com.senchenko.aliens.entity.Comment;
-import com.senchenko.aliens.entity.Monster;
-import com.senchenko.aliens.entity.User;
-
 import java.util.List;
 
 public class UserRatingAction {
@@ -15,7 +12,7 @@ public class UserRatingAction {
     private static final int DEFAULT_RATING_DECREASE = 1;
     private static final int ENOUGH_MARKS_COUNT = 3;
 
-    public static Comment updateUserRating(Comment comment){
+    static Comment updateUserRating(Comment comment){
         if (isEnoughMarks(comment.getMonster().getMonsterId()) ||
                 ((comment.getMonster().getAverageRating() + ACCEPTABLE_ESTIMATION_DIFFERENCE) > comment.getMark() &&
                 (comment.getMonster().getAverageRating() - ACCEPTABLE_ESTIMATION_DIFFERENCE) < comment.getMark())) {
