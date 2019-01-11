@@ -19,8 +19,8 @@ public class CommentService implements Commentable{
     private static final String USER_ATTRIBUTE = "user";
     private static final String RESULT_ATTRIBUTE = "result";
     private static final String NOT_ENOUGH_RIGHTS_ATTRIBUTE = "notEnoughRights";
-    private static final String MONSTER_PAGE_PROPERTY = "monsterPage";
-    private static final String ERROR_PAGE_PROPERTY = "errorPage";
+    private static final String MONSTER_PAGE_PROPERTY = "monster";
+    private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String STAR_PARAMETER = "star";
     private static final String COMMENT_PARAMETER = "comment";
     private static final String INVALID_DATA_MESSAGE = "invalidData";

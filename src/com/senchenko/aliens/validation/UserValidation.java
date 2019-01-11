@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class UserValidation {
     private static final String USER_LOGIN = "^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$";
-    private static final String USER_PASS = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+    private static final String USER_PASS = "(?=^.{8,50}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
     private static final String USER_EMAIL = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$";
     private static final String INTEGER_NUMBERS = "^[1-9]\\d{0,19}$";
     private static final int ADMIN_ROLE = 1;
@@ -33,9 +33,5 @@ public class UserValidation {
     public static boolean hasRoleAdminOrUser(Object role){
         return ( role != null) && ((((User)role).getRole().getRoleId() == ADMIN_ROLE) ||
                 (((User)role).getRole().getRoleId() == USER_ROLE));
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Pattern.matches(USER_PASS, "vxjydh1C"));
     }
 }

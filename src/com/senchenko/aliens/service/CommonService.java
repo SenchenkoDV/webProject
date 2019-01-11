@@ -6,7 +6,7 @@ import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 
 public class CommonService {
-    private static final String ERROR_PAGE_PROPERTY = "errorPage";
+    private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String RESULT_ATTRIBUTE = "result";
     private static final String WRONG_ACTION_ATTRIBUTE = "wrongAction";
 

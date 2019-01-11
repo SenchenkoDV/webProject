@@ -25,7 +25,7 @@ public class UserService implements Userable{
     private static final String LOGIN_PROPERTY = "login";
     private static final String REGISTRATION_PROPERTY = "registration";
     private static final String USERS_PROPERTY = "users";
-    private static final String ERROR_PAGE_PROPERTY = "errorPage";
+    private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String LOGIN_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String EMAIL_PARAMETER = "email";

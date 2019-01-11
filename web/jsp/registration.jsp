@@ -9,6 +9,10 @@
         <fmt:setLocale value="${language}" scope="session"/>
         <fmt:setBundle basename="property.messages" var="rb" />
     </div>
+    <style>
+        <%@include file="/css/main-style.css"%>
+        <%@include file="/css/login.css"%>
+    </style>
     <meta charset="UTF-8">
     <title><fmt:message key="title" bundle="${rb}"/></title>
     <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>

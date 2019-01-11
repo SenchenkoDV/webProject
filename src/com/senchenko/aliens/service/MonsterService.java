@@ -23,10 +23,10 @@ public class MonsterService implements Monsterable{
     private static final String RESULT_ATTRIBUTE = "result";
     private static final String NOT_ENOUGH_RIGHTS_ATTRIBUTE = "notEnoughRights";
     private static final String MONSTERS_PROPERTY = "monsters";
-    private static final String MONSTER_PAGE_PROPERTY = "monsterPage";
+    private static final String MONSTER_PAGE_PROPERTY = "monster";
     private static final String ADD_MONSTER_PROPERTY = "addMonster";
     private static final String UPDATE_MONSTER_PROPERTY = "updateMonster";
-    private static final String ERROR_PAGE_PROPERTY = "errorPage";
+    private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String MONSTERS_ID_PARAMETER = "monsterId";
     private static final String DESCRIPTION_PARAMETER = "description";
     private static final String NAME_PARAMETER = "name";
