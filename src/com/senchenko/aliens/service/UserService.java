@@ -37,7 +37,7 @@ public class UserService implements Userable{
     private static final String PASSWORD_REQUIREMENTS_MESSAGE  = "passwordRequirements";
 
     public CommandResult goToLoginPage(RequestContent content){
-        return new CommandResult(CommandResult.ResponseType.REDIRECT,
+        return new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(LOGIN_PROPERTY));
     }
 

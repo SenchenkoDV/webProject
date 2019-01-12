@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/web")
-public class AliensServlet extends HttpServlet {
+public class FrontServlet extends HttpServlet {
     private static final String ERROR_PAGE_ATTRIBUTE = "nullPage";
     private static final String ERROR_PAGE_MESSAGE = "nullPage";
     private static final String INDEX_PAGE = "index";
@@ -27,18 +27,18 @@ public class AliensServlet extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestContent requestContent = new RequestContent();
         requestContent.extractValues(request);
         CommandFactory factory = CommandFactory.INSTANCE;
         CommandResult result = factory.getCommand(requestContent).execute(requestContent);
         requestContent.insertAttributes(request);
-        if (result.getResponseType().equals(CommandResult.ResponseType.INVALIDATE)) {
-            request.getSession().invalidate();
-        }
-
-        if (result != null || result.getResponseType().equals(CommandResult.ResponseType.REDIRECT)) {
+        if (result.getResponseType().equals(CommandResult.ResponseType.FORWARD)) {
+            request.getRequestDispatcher(result.getPage()).forward(request,response);
+        } else if (result.getResponseType().equals(CommandResult.ResponseType.REDIRECT)) {
             response.sendRedirect(result.getPage());
+        } else if (result.getResponseType().equals(CommandResult.ResponseType.INVALIDATE)) {
+            request.getSession().invalidate();
         } else {
             request.getSession().setAttribute(ERROR_PAGE_ATTRIBUTE, MessageManager.EN.getMessage(ERROR_PAGE_MESSAGE));
             response.sendRedirect(request.getContextPath() + PageManager.getProperty(INDEX_PAGE));
