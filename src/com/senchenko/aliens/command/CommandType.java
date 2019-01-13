@@ -1,9 +1,6 @@
 package com.senchenko.aliens.command;
 
-import com.senchenko.aliens.service.CommentService;
-import com.senchenko.aliens.service.CommonService;
-import com.senchenko.aliens.service.MonsterService;
-import com.senchenko.aliens.service.UserService;
+import com.senchenko.aliens.service.*;
 
 public enum CommandType {
     LOGIN_PAGE(new UserService()::goToLoginPage),
@@ -21,7 +18,8 @@ public enum CommandType {
     UPDATE_MONSTER_PAGE(new  MonsterService()::goToUpdateMonsterPage),
     UPDATE_MONSTER(new MonsterService()::updateMonster),
     ADD_COMMENT(new CommentService()::addComment),
-    WRONG_COMMAND(new CommonService()::errorCommandType);
+    LOCALE(new LocaleService()::changeLocale),
+    WRONG_COMMAND(new ErrorService()::goToErrorPage);
 
     private Command command;
 

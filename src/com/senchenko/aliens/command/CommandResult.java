@@ -2,7 +2,7 @@ package com.senchenko.aliens.command;
 
 public class CommandResult {
     public enum ResponseType{
-        FORWARD, REDIRECT, INVALIDATE
+        FORWARD, REDIRECT, INVALIDATE, STAY_ON_PAGE
     }
     private ResponseType responseType;
     private String page;

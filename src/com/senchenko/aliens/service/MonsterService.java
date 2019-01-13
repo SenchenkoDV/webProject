@@ -111,7 +111,7 @@ public class MonsterService implements Monsterable{
         CommandResult commandResult;
         Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
         if (UserValidation.hasRoleAdmin(account)){
-            commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
+            commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(ADD_MONSTER_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,

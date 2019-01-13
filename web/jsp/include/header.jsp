@@ -12,6 +12,7 @@
     <style>
         <%@include file="/css/main-style.css"%>
     </style>
+    <script><%@include file="/js/LocaleController.js"%></script>
 </head>
 <body>
 <header class="header">
@@ -24,6 +25,11 @@
         <c:when test="${user==null}"><a href="/../web?command=login-page" class="header-button"><fmt:message key="header.login" bundle="${rb}"/></a></c:when>
         <c:otherwise><a href="../web?command=logout" class="header-button"><fmt:message key="header.logout" bundle="${rb}"/><output class="user-head">(${user.login})</output></a></c:otherwise>
     </c:choose>
+    <select type="text" class="locale-select" onchange="changeLocale(this.value)" name="role">
+        <option hidden selected="selected">${language}</option>
+        <option class="locale" value="en_US"><fmt:message key="locale.en_US" bundle="${rb}"/></option>
+        <option class="locale" value="ru_RU"><fmt:message key="locale.ru_RU" bundle="${rb}"/></option>
+    </select>
 </header>
 </body>
 </html>

@@ -5,12 +5,12 @@ import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 
-public class CommonService {
+public class ErrorService {
     private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String RESULT_ATTRIBUTE = "result";
     private static final String WRONG_ACTION_ATTRIBUTE = "wrongAction";
 
-    public CommandResult errorCommandType(RequestContent content){
+    public CommandResult goToErrorPage(RequestContent content){
         content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                 MessageManager.EN.getMessage(WRONG_ACTION_ATTRIBUTE));
         return new CommandResult(CommandResult.ResponseType.FORWARD,
