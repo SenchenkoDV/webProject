@@ -12,7 +12,7 @@ public class UserRatingAction {
     private static final int DEFAULT_RATING_DECREASE = 1;
     private static final int ENOUGH_MARKS_COUNT = 3;
 
-    static Comment updateUserRating(Comment comment){
+    public static Comment updateUserRating(Comment comment){
         if (isEnoughMarks(comment.getMonster().getMonsterId()) ||
                 ((comment.getMonster().getAverageRating() + ACCEPTABLE_ESTIMATION_DIFFERENCE) > comment.getMark() &&
                 (comment.getMonster().getAverageRating() - ACCEPTABLE_ESTIMATION_DIFFERENCE) < comment.getMark())) {

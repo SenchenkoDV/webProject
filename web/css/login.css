@@ -40,3 +40,8 @@
 .registration{
     margin: 5px;
 }
+
+.result{
+    margin: 2px;
+    color: red;
+}

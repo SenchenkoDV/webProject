@@ -115,5 +115,4 @@ public class SqlQueries {
                     "WHERE id_race = ?";
     public static final String SQL_DELETE_RACE_BY_ID =
             "DELETE FROM races where id_race = ?";
-
 }

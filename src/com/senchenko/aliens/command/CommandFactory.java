@@ -2,7 +2,7 @@ package com.senchenko.aliens.command;
 
 import com.senchenko.aliens.controller.RequestContent;
 
-public enum  CommandFactory {
+public enum CommandFactory {
     INSTANCE;
     private static final String DASH = "-";
     private static final String UNDERSCORE = "_";

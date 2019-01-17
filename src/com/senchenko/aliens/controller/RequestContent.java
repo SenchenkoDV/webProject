@@ -5,23 +5,27 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestContent {
+public class RequestContent implements Content{
     private HashMap<String, Object> requestAttributes = new HashMap<>();
     private HashMap<String, String[]> requestParameters = new HashMap<>();
     private HashMap<String, Object> sessionAttributes = new HashMap<>();
 
+    @Override
     public HashMap<String, Object> getRequestAttributes() {
         return requestAttributes;
     }
 
+    @Override
     public HashMap<String, String[]> getRequestParameters() {
         return requestParameters;
     }
 
+    @Override
     public HashMap<String, Object> getSessionAttributes() {
         return sessionAttributes;
     }
 
+    @Override
     public void extractValues(HttpServletRequest request) {
         Enumeration<String> attributeNames = request.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
@@ -40,6 +44,7 @@ public class RequestContent {
         }
     }
 
+    @Override
     public void insertAttributes(HttpServletRequest request) {
         for (Map.Entry<String, Object> attribute : sessionAttributes.entrySet()) {
             request.getSession().setAttribute(attribute.getKey(), attribute.getValue());

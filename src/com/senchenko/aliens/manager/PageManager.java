@@ -11,4 +11,7 @@ public class PageManager {
         resource = resourceBundle.getString(key);
         return resource;
     }
+
+    String object1= new String();
+    Object object2= new Object();
 }

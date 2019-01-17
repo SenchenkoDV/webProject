@@ -29,7 +29,9 @@
             <p class="password-text"><fmt:message key="form.login.password" bundle="${rb}"/></p>
             <input type="password" class="input-field" name="password" value=""/>
             <p class="email-text"><fmt:message key="form.registration.email" bundle="${rb}"/></p>
-            <input type="text" class="input-field" name="password" value=""/>
+            <input type="text" class="input-field" name="email" value=""/>
+            <br/>
+            <p class="result">${result}</p>
             <br/>
             ${requirements}
             <input type="submit" class="submit-button" value="<fmt:message key="form.registration.buttonSignUp" bundle="${rb}"/>"/>

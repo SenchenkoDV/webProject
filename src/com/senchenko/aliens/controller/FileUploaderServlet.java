@@ -4,7 +4,6 @@ import com.senchenko.aliens.manager.MessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +41,7 @@ public class FileUploaderServlet extends HttpServlet {
                     req.setAttribute(FILE_PASS_ATTRIBUTE,
                             File.separator + UPLOAD_DIR + File.separator + part.getSubmittedFileName());
                     req.setAttribute(RESULT_ATTRIBUTE, part.getSubmittedFileName() +
-                            MessageManager.EN.getMessage(SUCCESSFUL_UPLOAD_MESSAGE));
+                            MessageManager.getMessage(SUCCESSFUL_UPLOAD_MESSAGE));
                     req.getRequestDispatcher(ALIENS_SERVLET_URL).forward(req, resp);
                 }
             }

@@ -1,16 +1,19 @@
 package com.senchenko.aliens.service;
 
 import com.senchenko.aliens.command.CommandResult;
-import com.senchenko.aliens.controller.RequestContent;
+import com.senchenko.aliens.controller.Content;
 import com.senchenko.aliens.dao.CommentDao;
 import com.senchenko.aliens.dao.SingletonDaoProvider;
 import com.senchenko.aliens.dao.TransactionExecutor;
 import com.senchenko.aliens.dao.UserDao;
-import com.senchenko.aliens.entity.*;
+import com.senchenko.aliens.entity.Comment;
+import com.senchenko.aliens.entity.Monster;
+import com.senchenko.aliens.entity.User;
 import com.senchenko.aliens.manager.MessageManager;
 import com.senchenko.aliens.manager.PageManager;
 import com.senchenko.aliens.validation.CommentValidator;
 import com.senchenko.aliens.validation.UserValidation;
+
 import java.sql.Date;
 
 public class CommentService implements Commentable{
@@ -25,7 +28,7 @@ public class CommentService implements Commentable{
     private static final String COMMENT_PARAMETER = "comment";
     private static final String INVALID_DATA_MESSAGE = "invalidData";
 
-    public CommandResult addComment(RequestContent content){
+    public CommandResult addComment(Content content){
         CommandResult commandResult;
         String mark = content.getRequestParameters().get(STAR_PARAMETER)[0];
         String comment = content.getRequestParameters().get(COMMENT_PARAMETER)[0];
@@ -50,13 +53,13 @@ public class CommentService implements Commentable{
                 commandResult = new MonsterService().pickMonster(content);
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(MONSTER_PAGE_PROPERTY));
         }

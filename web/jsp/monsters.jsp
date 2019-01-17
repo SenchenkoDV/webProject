@@ -25,7 +25,7 @@
         <div class="for-wrapper">
         <c:forEach var="monster" items="${monsters}">
                 <div class="picture">
-                    <a class="picture-wrapper" href="../web?command=monster&monsterId=${monster.monsterId}">
+                    <a class="picture-wrapper" href="/../web?command=monster&monsterId=${monster.monsterId}">
                         <div class="image-wrapper">
                             <img class="current-picture" src="${monster.pictureAddress}">
                         </div>
@@ -36,7 +36,7 @@
                         </div>
                     </a>
                     <c:if test="${user.role.roleId==1}">
-                        <a class="edit-monster" href="../web?command=update-monster-page&name=${monster.name}"><fmt:message key="page.monster.editButton" bundle="${rb}"/></a>
+                        <a class="edit-monster" href="/../web?command=update-monster-page&name=${monster.name}"><fmt:message key="page.monster.editButton" bundle="${rb}"/></a>
                     </c:if>
                 </div>
         </c:forEach>

@@ -43,7 +43,7 @@ public class UserService implements Userable{
 
     public CommandResult goToRegistrationPage(RequestContent content){
         content.getSessionAttributes().put(PASSWORD_REQUIREMENTS_ATTRIBUTE,
-                MessageManager.EN.getMessage(PASSWORD_REQUIREMENTS_MESSAGE));
+                MessageManager.getMessage(PASSWORD_REQUIREMENTS_MESSAGE));
         return new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(REGISTRATION_PROPERTY));
     }
@@ -66,13 +66,13 @@ public class UserService implements Userable{
             }
             else {
                 content.getRequestAttributes().put(ERROR_LOGIN_PASS_ATTRIBUTE,
-                        MessageManager.EN.getMessage(LOGIN_ERROR_MESSAGE));
+                        MessageManager.getMessage(LOGIN_ERROR_MESSAGE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(LOGIN_PROPERTY));
             }
         }else {
-            content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+            content.getRequestAttributes().put(RESULT_ATTRIBUTE,
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(LOGIN_PROPERTY));
         }
@@ -104,14 +104,14 @@ public class UserService implements Userable{
                 commandResult = login(content);
             }else {
                 content.getRequestAttributes().put(RESULT_ATTRIBUTE, createdUser.getLogin() +
-                        MessageManager.EN.getMessage(CREATE_USER_ERROR_MESSAGE));
+                        MessageManager.getMessage(CREATE_USER_ERROR_MESSAGE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(LOGIN_PROPERTY));
             }
             transactionExecutor.endTransaction();
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(REGISTRATION_PROPERTY));
         }
@@ -137,13 +137,13 @@ public class UserService implements Userable{
                 commandResult = goToUsersPage(content);
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(USERS_PROPERTY));
         }
@@ -166,7 +166,7 @@ public class UserService implements Userable{
                     PageManager.getProperty(USERS_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }

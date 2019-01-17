@@ -12,7 +12,7 @@ public class ErrorService {
 
     public CommandResult goToErrorPage(RequestContent content){
         content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                MessageManager.EN.getMessage(WRONG_ACTION_ATTRIBUTE));
+                MessageManager.getMessage(WRONG_ACTION_ATTRIBUTE));
         return new CommandResult(CommandResult.ResponseType.FORWARD,
                 PageManager.getProperty(ERROR_PAGE_PROPERTY));
     }

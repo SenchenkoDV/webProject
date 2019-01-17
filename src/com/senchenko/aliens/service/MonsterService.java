@@ -1,6 +1,7 @@
 package com.senchenko.aliens.service;
 
 import com.senchenko.aliens.command.CommandResult;
+import com.senchenko.aliens.controller.Content;
 import com.senchenko.aliens.controller.RequestContent;
 import com.senchenko.aliens.dao.*;
 import com.senchenko.aliens.entity.Comment;
@@ -49,7 +50,7 @@ public class MonsterService implements Monsterable{
         return commandResult;
     }
 
-    public CommandResult pickMonster(RequestContent content){
+    public CommandResult pickMonster(Content content){
         CommandResult commandResult;
         Monster currentMonster;
         List<Comment> comments;
@@ -69,7 +70,7 @@ public class MonsterService implements Monsterable{
                     PageManager.getProperty(MONSTER_PAGE_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -81,7 +82,7 @@ public class MonsterService implements Monsterable{
         String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
         if (MonsterValidation.changeMonsterDescriptionValidator(changedMonsterDescription)){
             Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
-            if (UserValidation.hasRoleAdminOrUser(account)){
+            if (new UserValidation().hasRoleAdminOrUser(account)){
                 Monster currentMonster = (Monster) content.getSessionAttributes().get(MONSTER_ATTRIBUTE);
                 currentMonster.setDescription(changedMonsterDescription);
                 MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
@@ -94,13 +95,13 @@ public class MonsterService implements Monsterable{
                         PageManager.getProperty(MONSTER_PAGE_PROPERTY));
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -115,7 +116,7 @@ public class MonsterService implements Monsterable{
                 PageManager.getProperty(ADD_MONSTER_PROPERTY));
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                    MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -147,18 +148,18 @@ public class MonsterService implements Monsterable{
                         DEFAULT_AVERAGE_RATING, picturePath));
                 transactionExecutor.commit();
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
+                        MessageManager.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
                 commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
                         PageManager.getProperty(ADD_MONSTER_PROPERTY));
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -178,17 +179,17 @@ public class MonsterService implements Monsterable{
                 content.getSessionAttributes().put(MONSTER_ATTRIBUTE, currentMonster);
                 transactionExecutor.commit();
                 transactionExecutor.endTransaction();
-                commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }
@@ -221,18 +222,18 @@ public class MonsterService implements Monsterable{
                 transactionExecutor.commit();
                 transactionExecutor.endTransaction();
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
+                        MessageManager.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                        MessageManager.EN.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
+                        MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
                 commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                         PageManager.getProperty(ERROR_PAGE_PROPERTY));
             }
         }else {
             content.getSessionAttributes().put(RESULT_ATTRIBUTE,
-                    MessageManager.EN.getMessage(INVALID_DATA_MESSAGE));
+                    MessageManager.getMessage(INVALID_DATA_MESSAGE));
             commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
                     PageManager.getProperty(ERROR_PAGE_PROPERTY));
         }

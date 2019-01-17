@@ -42,4 +42,12 @@ public class Race extends Entity {
         result = 31 * result + (race != null ? race.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Race{" +
+                "raceId=" + raceId +
+                ", race='" + race + '\'' +
+                '}';
+    }
 }

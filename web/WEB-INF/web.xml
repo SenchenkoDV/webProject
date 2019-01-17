@@ -6,9 +6,6 @@
     <error-page>
         <location>/jsp/error/commonError.jsp</location>
     </error-page>
-    <listener>
-        <listener-class>com.senchenko.aliens.listener.AttributeListener</listener-class>
-    </listener>
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
         <param-value>en_US</param-value>

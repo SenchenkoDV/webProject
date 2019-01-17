@@ -1,18 +1,14 @@
 package com.senchenko.aliens.manager;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-public enum  MessageManager {
-    EN(ResourceBundle.getBundle("property.messages", new Locale("en", "EN"))),
-    RU(ResourceBundle.getBundle("property.messages", new Locale("ru", "RU")));
-    private ResourceBundle bundle;
+public class MessageManager {
+    private static final String MESSAGES_PROPERTY = "property.messages";
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(MESSAGES_PROPERTY);
 
-    MessageManager(ResourceBundle bundle) {
-        this.bundle = bundle;
-    }
-
-    public String getMessage(String key) {
-        return bundle.getString(key);
+    public static String getMessage(String key) {
+        String resource;
+        resource = resourceBundle.getString(key);
+        return resource;
     }
 }

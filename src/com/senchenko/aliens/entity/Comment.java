@@ -95,7 +95,7 @@ public class Comment extends Entity{
 
     @Override
     public String toString() {
-        return "Commentable{" +
+        return "Comment{" +
                 "commentId=" + commentId +
                 ", date=" + date +
                 ", monster=" + monster +

@@ -30,7 +30,7 @@
             <input type="password" class="input-field" name="password" value=""/>
             <a href="../web?command=registration-page" class="registration"><fmt:message key="form.login.registrationLink" bundle="${rb}"/></a>
             <br/>
-            ${result}
+            <p class="result">${result}</p>
             <br/>
             <input type="submit" class="submit-button" value="<fmt:message key="form.login.loginButton" bundle="${rb}"/>"/>
         </form>

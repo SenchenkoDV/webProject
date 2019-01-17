@@ -18,12 +18,12 @@ public class FrontServlet extends HttpServlet {
     private static final String INDEX_PAGE = "index";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
     }
 
@@ -39,8 +39,11 @@ public class FrontServlet extends HttpServlet {
             response.sendRedirect(result.getPage());
         } else if (result.getResponseType().equals(CommandResult.ResponseType.INVALIDATE)) {
             request.getSession().invalidate();
+            response.sendRedirect(PageManager.getProperty(INDEX_PAGE));
+        } else if (result.getResponseType().equals(CommandResult.ResponseType.STAY_ON_PAGE)) {
+            response.sendRedirect("");
         } else {
-            request.getSession().setAttribute(ERROR_PAGE_ATTRIBUTE, MessageManager.EN.getMessage(ERROR_PAGE_MESSAGE));
+            request.getSession().setAttribute(ERROR_PAGE_ATTRIBUTE, MessageManager.getMessage(ERROR_PAGE_MESSAGE));
             response.sendRedirect(request.getContextPath() + PageManager.getProperty(INDEX_PAGE));
         }
     }

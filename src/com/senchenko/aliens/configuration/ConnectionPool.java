@@ -78,7 +78,6 @@ public enum ConnectionPool{
             } catch (SQLException e) {
                 LOGGER.log(Level.INFO, String.format("Error deregister driver %s", driver), e);
             }
-
         }
     }
 }
