@@ -20,7 +20,9 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
 import java.util.HashMap;
+
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 
@@ -51,10 +53,7 @@ public class CommentServiceTest {
         Monster monster = new Monster(-1,  "test", new Race(1, "test"),"test", 0.0,"test");
         map2.put("monster", monster);
 
-        PowerMockito.whenNew(CommentDao.class).withAnyArguments().thenReturn(commentDao);
-        PowerMockito.whenNew(TransactionExecutor.class).withAnyArguments().thenReturn(transactionExecutor);
-        PowerMockito.whenNew(MonsterService.class).withAnyArguments().thenReturn(monsterService);
-        PowerMockito.whenNew(UserDao.class).withAnyArguments().thenReturn(userDao);
+
 
         doReturn(new CommandResult(CommandResult.ResponseType.FORWARD, expectedPage)).when(monsterService).pickMonster(content);
         when(content.getRequestParameters()).thenReturn(map1);
@@ -62,6 +61,12 @@ public class CommentServiceTest {
         when(CommentValidator.addCommentValidator(anyString(), anyString())).thenReturn(true);
         when(UserValidation.hasRoleAdminOrUser(any())).thenReturn(true);
         commentService.addComment(content);
+
+        PowerMockito.whenNew(RequestContent.class).withAnyArguments().thenReturn(content);
+        PowerMockito.whenNew(CommentDao.class).withAnyArguments().thenReturn(commentDao);
+        PowerMockito.whenNew(TransactionExecutor.class).withNoArguments().thenReturn(transactionExecutor);
+        PowerMockito.whenNew(MonsterService.class).withAnyArguments().thenReturn(monsterService);
+        PowerMockito.whenNew(UserDao.class).withAnyArguments().thenReturn(userDao);
 
         verify(commentService, times(1)).addComment(content);
         verify(content, times(2)).getRequestParameters();
