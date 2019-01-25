@@ -14,6 +14,7 @@ import java.util.List;
 
 public class UserService implements Userable{
     private static final int DEFAULT_ID = 0;
+    private static final int DEFAULT_ROLE_ID = 2;
     private static final int DEFAULT_USER_RATING = 0;
     private static final String DEFAULT_ROLE = "user";
     private static final String ERROR_LOGIN_PASS_ATTRIBUTE = "successfulCreateMonster";
@@ -25,6 +26,7 @@ public class UserService implements Userable{
     private static final String LOGIN_PROPERTY = "login";
     private static final String REGISTRATION_PROPERTY = "registration";
     private static final String USERS_PROPERTY = "users";
+    private static final String MONSTERS_PAGE = "/../web?command=monsters";
     private static final String ERROR_PAGE_PROPERTY = "error";
     private static final String LOGIN_PARAMETER = "login";
     private static final String PASSWORD_PARAMETER = "password";
@@ -62,7 +64,7 @@ public class UserService implements Userable{
             if (currentUser != null || (currentUser.getLogin().equals(enterLogin) &&
                     currentUser.getPassword().equals(enterPass))){
                 content.getSessionAttributes().put(USER_ATTRIBUTE, currentUser);
-                commandResult = new MonsterService().goToMonstersPage(content);
+                commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT, MONSTERS_PAGE);
             }
             else {
                 content.getRequestAttributes().put(ERROR_LOGIN_PASS_ATTRIBUTE,
@@ -96,9 +98,8 @@ public class UserService implements Userable{
             User createdUser = (User) userDao.findUserByLogin(enterLogin);
             transactionExecutor.commit();
             if (createdUser == null) {
-                createdUser = new User(DEFAULT_ID, new Role(DEFAULT_ID, DEFAULT_ROLE), DEFAULT_USER_RATING,
+                createdUser = new User(DEFAULT_ID, new Role(DEFAULT_ROLE_ID, DEFAULT_ROLE), DEFAULT_USER_RATING,
                         enterLogin, enterPass, enterEmail);
-                transactionExecutor.beginTransaction(userDao);
                 userDao.create(createdUser);
                 transactionExecutor.commit();
                 commandResult = login(content);

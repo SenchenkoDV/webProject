@@ -16,6 +16,7 @@ public class FrontServlet extends HttpServlet {
     private static final String ERROR_PAGE_ATTRIBUTE = "nullPage";
     private static final String ERROR_PAGE_MESSAGE = "nullPage";
     private static final String INDEX_PAGE = "index";
+    private static final String EMPTY_PAGE = "";
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,6 +30,7 @@ public class FrontServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestContent requestContent = new RequestContent();
+        request.getSession();
         requestContent.extractValues(request);
         CommandFactory factory = CommandFactory.INSTANCE;
         CommandResult result = factory.getCommand(requestContent).execute(requestContent);
@@ -41,7 +43,7 @@ public class FrontServlet extends HttpServlet {
             request.getSession().invalidate();
             response.sendRedirect(PageManager.getProperty(INDEX_PAGE));
         } else if (result.getResponseType().equals(CommandResult.ResponseType.STAY_ON_PAGE)) {
-            response.sendRedirect("");
+            request.getRequestDispatcher(EMPTY_PAGE).forward(request, response);
         } else {
             request.getSession().setAttribute(ERROR_PAGE_ATTRIBUTE, MessageManager.getMessage(ERROR_PAGE_MESSAGE));
             response.sendRedirect(request.getContextPath() + PageManager.getProperty(INDEX_PAGE));

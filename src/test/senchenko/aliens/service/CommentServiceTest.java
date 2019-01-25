@@ -45,7 +45,6 @@ public class CommentServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        expectedPage = "/jsp/monster.jsp";
         requestParameters = new HashMap<>();
         sessionAttributes = new HashMap<>();
         requestParameters.put("star", new String[]{"1"});
@@ -85,6 +84,7 @@ public class CommentServiceTest {
 
     @Test
     public void addComment() throws Exception {
+        expectedPage = "/jsp/monster.jsp";
         when(content.getRequestParameters()).thenReturn(requestParameters);
         when(content.getSessionAttributes()).thenReturn(sessionAttributes);
         when(CommentValidator.addCommentValidator(anyString(), anyString())).thenReturn(true);

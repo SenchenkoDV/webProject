@@ -79,7 +79,7 @@ public class MonsterService implements Monsterable{
 
     public CommandResult changeMonsterDescription(RequestContent content){
         CommandResult commandResult;
-        String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0];
+        String changedMonsterDescription = content.getRequestParameters().get(DESCRIPTION_PARAMETER)[0].trim();
         if (MonsterValidation.changeMonsterDescriptionValidator(changedMonsterDescription)){
             Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
             if (new UserValidation().hasRoleAdminOrUser(account)){
@@ -131,26 +131,28 @@ public class MonsterService implements Monsterable{
         if (MonsterValidation.addMonsterValidator(name, raceName, description)){
             Object account = content.getSessionAttributes().get(USER_ATTRIBUTE);
             if (UserValidation.hasRoleAdmin(account)){
+                Race race;
                 String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
                 TransactionExecutor transactionExecutor = new TransactionExecutor();
                 RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
-                transactionExecutor.beginTransaction(raceDao);
-                Race race = (Race) raceDao.findByRace(raceName);
-                transactionExecutor.commit();
-                transactionExecutor.endTransaction();
-                if (race == null){
-                    raceDao.create(new Race(DEFAULT_ID, raceName));
-                    transactionExecutor.commit();
-                }
                 MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-                transactionExecutor.beginTransaction(monsterDao);
+                transactionExecutor.beginTransaction(raceDao, monsterDao);
+                race = (Race) raceDao.findByRace(raceName);
+                transactionExecutor.commit();
+                if (race == null){
+                    race = new Race(DEFAULT_ID, raceName);
+                    raceDao.create(race);
+                    transactionExecutor.commit();
+                    race = (Race) raceDao.findByRace(raceName);
+                }
                 monsterDao.create(new Monster(DEFAULT_ID, name, race, description,
                         DEFAULT_AVERAGE_RATING, picturePath));
                 transactionExecutor.commit();
+                transactionExecutor.endTransaction();
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.getMessage(SUCCESSFUL_CREATE_MONSTER_MESSAGE));
-                commandResult = new CommandResult(CommandResult.ResponseType.REDIRECT,
-                        PageManager.getProperty(ADD_MONSTER_PROPERTY));
+                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
+                        PageManager.getProperty(MONSTER_PAGE_PROPERTY));
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));
@@ -208,23 +210,23 @@ public class MonsterService implements Monsterable{
                 String picturePath = (String) content.getRequestAttributes().get(FILE_PATH_ATTRIBUTE);
                 TransactionExecutor transactionExecutor = new TransactionExecutor();
                 RaceDao raceDao = SingletonDaoProvider.INSTANCE.getRaceDao();
-                transactionExecutor.beginTransaction(raceDao);
+                MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
+                transactionExecutor.beginTransaction(raceDao, monsterDao);
                 Race race = (Race) raceDao.findByRace(raceName);
                 transactionExecutor.commit();
                 if (race == null){
-                    raceDao.create(new Race(DEFAULT_ID, raceName));
+                    race = new Race(DEFAULT_ID, raceName);
+                    raceDao.create(race);
                     transactionExecutor.commit();
+                    race = (Race) raceDao.findByRace(raceName);
                 }
-                MonsterDao monsterDao = SingletonDaoProvider.INSTANCE.getMonsterDao();
-                transactionExecutor.beginTransaction(monsterDao);
                 monsterDao.update(new Monster(Integer.parseInt(updatedMonsterId),
                         name, race, description, DEFAULT_AVERAGE_RATING, picturePath));
                 transactionExecutor.commit();
                 transactionExecutor.endTransaction();
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.getMessage(SUCCESSFUL_UPDATE_MONSTER_MESSAGE));
-                commandResult = new CommandResult(CommandResult.ResponseType.FORWARD,
-                        PageManager.getProperty(UPDATE_MONSTER_PROPERTY));
+                commandResult = goToMonstersPage(content);
             }else {
                 content.getSessionAttributes().put(RESULT_ATTRIBUTE,
                         MessageManager.getMessage(NOT_ENOUGH_RIGHTS_ATTRIBUTE));

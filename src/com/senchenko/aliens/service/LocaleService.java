@@ -11,6 +11,6 @@ public class LocaleService {
     public CommandResult changeLocale(RequestContent content){
         String selectedLocale = content.getRequestParameters().get(LOCALE_PARAMETER)[0];
         content.getSessionAttributes().put(LANGUAGE_ATTRIBUTE, selectedLocale);
-        return new CommandResult(CommandResult.ResponseType.STAY_ON_PAGE, EMPTY_PAGE);
+        return new CommandResult(CommandResult.ResponseType.FORWARD, "monsters");
     }
 }

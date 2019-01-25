@@ -49,7 +49,6 @@
 .edit-button{
     align-self: flex-end;
     font-size: 20px;
-    width: 60px;
     height: 30px;
     margin-top: 10px;
     margin-right: 10px;
@@ -78,7 +77,6 @@
 .save-button{
     flex: 0 0 auto;
     height: 30px;
-    width: 60px;
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 10px;
@@ -210,7 +208,6 @@ textarea.review{
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
-    width: 100px;
     height: 40px;
     margin: 7px;
 }

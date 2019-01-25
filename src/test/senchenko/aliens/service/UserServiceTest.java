@@ -81,7 +81,7 @@ public class UserServiceTest {
 
     @Test
     public void login() throws Exception {
-        String expectedPage = "/jsp/monsters.jsp";
+        String expectedPage = "/../web?command=monsters";
         when(monsterService.goToMonstersPage(content))
                 .thenReturn(new CommandResult(CommandResult.ResponseType.FORWARD,expectedPage));
         when(userDao.findUserByLogin(anyString())).thenReturn(user);
@@ -91,7 +91,7 @@ public class UserServiceTest {
         PowerMockito.whenNew(TransactionExecutor.class).withAnyArguments().thenReturn(transactionExecutor);
         PowerMockito.whenNew(UserDao.class).withAnyArguments().thenReturn(userDao);
         PowerMockito.whenNew(MonsterService.class).withAnyArguments().thenReturn(monsterService);
-        assertEquals(CommandResult.ResponseType.FORWARD, userService.login(content).getResponseType());
+        assertEquals(CommandResult.ResponseType.REDIRECT, userService.login(content).getResponseType());
         assertEquals(expectedPage, userService.login(content).getPage());
     }
 
